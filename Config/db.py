@@ -4,4 +4,4 @@ engine = create_engine("mysql+pymysql://root:Deadmatch3640@localhost:3306/Retaur
 
 conn = engine.connect()
 
-meta = MetaData()
+meta_data = MetaData(engine)
