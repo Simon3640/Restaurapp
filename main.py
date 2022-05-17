@@ -4,9 +4,9 @@
 from fastapi import FastAPI
 
 #Project
-from Routes.routes import product
+from Routes.routes import Route
 
 app = FastAPI()
 
-app.include_router(product)
+app.include_router(Route)
 
