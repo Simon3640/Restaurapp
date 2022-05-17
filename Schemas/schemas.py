@@ -54,7 +54,7 @@ class Ingredients(BaseModel):
 
 class Category(BaseModel):
 
-    Category_id: Optional[int]
+    id: Optional[int]
 
     name: str = Field(
         ...,
