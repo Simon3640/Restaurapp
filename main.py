@@ -9,3 +9,4 @@ from Routes.routes import product
 app = FastAPI()
 
 app.include_router(product)
+
