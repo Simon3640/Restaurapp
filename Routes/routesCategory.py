@@ -3,7 +3,7 @@ from shutil import copyfileobj
 
 #fastAPI
 from typing import List, Optional
-from fastapi import APIRouter, Body, File, Form, Path, Query, Response, status
+from fastapi import APIRouter, Body, File, Form, Path, Query, Response, UploadFile, status
 from pydantic import Field
 
 #Project
@@ -19,10 +19,11 @@ tableCategory = modelCategory.__table__
     path = '/category/new',
     status_code = status.HTTP_201_CREATED,
     summary = 'Permite la creacion de un producto',
-    tags = ['Categorys']
+    tags = ['Categories']
     )
 def createCategory(
-    dataCategory: Category = Body(...),
+    category_name: str = Form(...),
+    image: UploadFile = File(None)
     ):
     """
     Path operation para crear una nueva categoria
@@ -37,21 +38,28 @@ def createCategory(
         
     """
 
+    
+    category_id = GetColumn('Producto','Product_id')[-1]+1
+
+    file_name1 = f'images/GaleryCategories/Category_{category_id}.jpg'
+    with open(file_name1, "wb") as buffer:
+        copyfileobj(image.file, buffer)
+   
+
     with engine.connect() as conn:
-        new_category = dataCategory.dict()
-        conn.execute(tableCategory.insert().values(new_category))
+        conn.execute(tableCategory.insert().values(Name=category_name))
         return Response(status_code=status.HTTP_201_CREATED)
 
 
 
 @Route.delete(
-    path = '/category/delete/{product_id}',
+    path = '/category/delete/{category_id}',
     status_code = status.HTTP_204_NO_CONTENT,
     summary = 'Elimina un producto',
-    tags = ['Categorys']
+    tags = ['Categories']
 )
-def deleteProduct(
-    Category : str = Query('No Category', enum=GetColumn('Categorias', 'Name'))
+def deleteCategory(
+    category_id: int
 ):
     """Elimina una categoria de la base de datos
 
@@ -61,16 +69,23 @@ def deleteProduct(
 
     Returns:
 
-        remueve el producto y devuelve HTTP 204
+        remueve la categoria y devuelve HTTP 204
     """
-    indexid = GetColumn('Categorias','Name').index(Category)
-    category_id = GetColumn('Categorias','id')[indexid]
     with engine.connect() as conn:
         conn.execute(tableCategory.delete()\
         .where(tableCategory.c.id == category_id))
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-
+@Route.get(
+    path = '/categories',
+    status_code = status.HTTP_200_OK,
+    tags = ['Categories']
+)
+def showCategories():
+    with engine.connect() as conn:
+        result = conn.execute(tableCategory.select()).fetchall()
+    return result
+    
 
 

@@ -37,7 +37,7 @@ def Home():
     )
 def createProduct(
     dataProduct: Product = Body(...),
-    Category : str = Query('No Category', enum=GetColumn('Categorias', 'Name'))
+    Category : str = Query('No Category', enum=GetColumn('Categorias', 'Name')),
     ):
     """
     Path operation para crear un nuevo producto
@@ -56,10 +56,12 @@ def createProduct(
         status code 201
         
     """
+
     indexid = GetColumn('Categorias','Name').index(Category)
     idCategoria = GetColumn('Categorias','id')[indexid]
     idProduct = GetColumn('Producto','Product_id')[-1]+1
     InsertINTO('Categoria_producto',(idCategoria,idProduct))
+
     with engine.connect() as conn:
         new_product = dataProduct.dict()
         conn.execute(tableProduct.insert().values(new_product))
@@ -87,6 +89,7 @@ def deleteProduct(
 
         remueve el producto y devuelve HTTP 204
     """
+    
     with engine.connect() as conn:
         conn.execute(tableProduct.delete()\
         .where(tableProduct.c.Product_id == product_id))
@@ -137,28 +140,17 @@ def updateImages(
     
     from os import makedirs, path
     
-    codeim = uuid4()
-    file_name1 = f'images/GaleryProduct{product_id}/{codeim}.jpg'
+    file_name1 = f'images/GaleryProduct{product_id}/Principal_Image.jpg'
     makedirs(path.dirname(file_name1), exist_ok=True)
    
     with open(file_name1, "wb") as buffer:
         copyfileobj(image.file, buffer)
-    
-    Gcodeim = []
 
-    for imG in galery:
-        gcodeim = uuid4()
-        Gcodeim += [f'{gcodeim}']
-        file_name = f'images/GaleryProduct{product_id}/{gcodeim}.jpg'
+    for _,imG in enumerate(galery):
+        file_name = f'images/GaleryProduct{product_id}/Image{_}.jpg'
         with open(file_name, "wb") as buffer:
             copyfileobj(imG.file, buffer)
-    
-    with engine.connect() as conn:
-        conn.execute(tableProduct.update()\
-            .values(Image = codeim, Image_Galery = str(Gcodeim))\
-                .where(tableProduct.c.Product_id == product_id))
-        return Response(status_code=status.HTTP_201_CREATED)
-
+    return Response(status_code = status.HTTP_200_OK)
 
 ##Actualiza la informacion de un producto
 
@@ -169,9 +161,9 @@ def updateImages(
     tags = ['Products']
 )
 def updateProduct(
-    dataProduct: Product,
     product_id: int,
-    Category : str = Query('No Category', enum=GetColumn('Categorias', 'Name'))
+    dataProduct: Product = Body(...),
+    Category : str = Query('No Category', enum=GetColumn('Categorias', 'Name')),
 ):
     """Este path operation realiza una actualizacion en la base de datos del producto
 
@@ -184,6 +176,9 @@ def updateProduct(
 
         actualiza la base de datos y devuelve un response HTTP 200
     """
+    indexid = GetColumn('Categorias','Name').index(Category)
+    idCategoria = GetColumn('Categorias','id')[indexid]
+    InsertINTO('Categoria_producto',(idCategoria,product_id))
     upDataProduct=dataProduct.dict()
     with engine.connect() as conn:
         conn.execute(
