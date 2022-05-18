@@ -4,21 +4,22 @@ from shutil import copyfileobj
 
 #fastAPI
 from typing import List, Optional
-from fastapi import APIRouter, Body, File, Form, Path, Response, status, UploadFile, HTTPException
+from fastapi import APIRouter, Body, File, Form, Path, Query, Response, status, UploadFile, HTTPException
 from pydantic import Field
-
 
 #Project
 from Schemas.schemas import Product
 from Config.db import engine
-from Models.models import modelProduct
+from Models.ModelProduct import modelProduct
+from UsefulFunctions import GetColumn, InsertINTO
 
 Route=APIRouter()
 
 #Shortcuts
-tableProduct= modelProduct.__table__
+tableProduct = modelProduct.__table__
 
 
+#Usable Functions
 
 @Route.get('/user')
 def Home():
@@ -36,6 +37,7 @@ def Home():
     )
 def createProduct(
     dataProduct: Product = Body(...),
+    Category : str = Query('No Category', enum=GetColumn('Categorias', 'Name'))
     ):
     """
     Path operation para crear un nuevo producto
@@ -47,12 +49,17 @@ def createProduct(
         Short_Description: Descripcion corta corta del producto * - maximo 100 caracteres
         Value: Precio del producto * 
 
+        Categoria
+
     Este path operation sube la informacion basica del producto a la base de datos de MySQL:
 
         status code 201
         
     """
-    
+    indexid = GetColumn('Categorias','Name').index(Category)
+    idCategoria = GetColumn('Categorias','id')[indexid]
+    idProduct = GetColumn('Producto','Product_id')[-1]+1
+    InsertINTO('Categoria_producto',(idCategoria,idProduct))
     with engine.connect() as conn:
         new_product = dataProduct.dict()
         conn.execute(tableProduct.insert().values(new_product))
@@ -163,7 +170,8 @@ def updateImages(
 )
 def updateProduct(
     dataProduct: Product,
-    product_id: int
+    product_id: int,
+    Category : str = Query('No Category', enum=GetColumn('Categorias', 'Name'))
 ):
     """Este path operation realiza una actualizacion en la base de datos del producto
 
@@ -183,10 +191,6 @@ def updateProduct(
                 .where(tableProduct.c.Product_id == product_id)
         )
     return Response(status_code= status.HTTP_200_OK)
-
-
-##Categorias
-###Crear categoria
 
 
 

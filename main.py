@@ -4,9 +4,11 @@
 from fastapi import FastAPI
 
 #Project
-from Routes.routes import Route
+from Routes import routesProducts, routesCategory
+
 
 app = FastAPI()
 
-app.include_router(Route)
+app.include_router(routesProducts.Route)
+app.include_router(routesCategory.Route)
 
