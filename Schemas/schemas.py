@@ -45,7 +45,7 @@ class Product(BaseModel):
 class Ingredients(BaseModel):
     Ingridients_id : Optional[int]
 
-    name: str = Field(
+    Name: str = Field(
         ...,
         min_length = 1,
         max_length = 45,
@@ -56,7 +56,7 @@ class Category(BaseModel):
 
     id: Optional[int]
 
-    name: str = Field(
+    Name: str = Field(
         ...,
         min_length = 1,
         max_length = 45,

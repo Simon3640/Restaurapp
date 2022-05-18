@@ -8,7 +8,7 @@ from fastapi import APIRouter, Body, File, Form, Path, Query, Response, status, 
 from pydantic import Field
 
 #Project
-from Schemas.schemas import Category, Product
+from Schemas.schemas import Product
 from Config.db import engine
 from Models.ModelProduct import modelProduct
 from UsefulFunctions import GetColumn, InsertINTO
@@ -192,10 +192,6 @@ def updateProduct(
         )
     return Response(status_code= status.HTTP_200_OK)
 
-
-##Categorias
-###Crear categoria
-@Route.put
 
 
 #Vistas de los productos
