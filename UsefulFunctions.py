@@ -11,5 +11,4 @@ def GetColumn(Table,columname):
 
 def InsertINTO(Table,data):
     with engine.connect() as conn:
-        conn.execute(text('SET FOREIGN_KEY_CHECKS=0'))
         conn.execute(text(f'INSERT INTO Retaurapp.{Table} VALUES (Null,'+str(data)[1:]))
