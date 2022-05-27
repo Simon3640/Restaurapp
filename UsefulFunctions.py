@@ -1,4 +1,3 @@
-from sqlite3 import connect
 from Config.db import engine
 from shutil import copyfileobj
 from sqlalchemy import text
@@ -8,6 +7,12 @@ def GetColumn(Table : str,columname : str):
          result = conn.execute(text(f'select {columname} from Retaurapp.{Table}'))
          result = [_[f"{columname}"] for _ in result]
      return result
+
+def GetTable(Table:str):
+    with engine.connect() as conn:
+        result = conn.execute(text(f'SELECT * FROM Retaurapp.{Table}'))
+        result_dict = result.mappings().all()
+    return result_dict
 
 async def InsertINTO(Table,data : tuple):
     with engine.connect() as conn:
@@ -45,3 +50,19 @@ async def deleteData(table, id : int):
     with engine.connect() as conn:
         conn.execute(table.delete()\
             .where(table.c.id == id))
+
+async def showAllData(table):
+    with engine.connect() as conn:
+        result = conn.execute(table.select()).fetchall()
+    return result
+
+
+def Innerjoin(category_id : int):
+    with engine.connect() as conn:
+        result = conn.execute(text(f'SELECT Retaurapp.Producto.* \
+        FROM Retaurapp.Producto \
+            INNER JOIN Retaurapp.Categoria_producto ON Retaurapp.Producto.id = Retaurapp.Categoria_producto.id_producto \
+            INNER JOIN Retaurapp.Categorias ON Retaurapp.Categoria_producto.id_categoria = Retaurapp.Categorias.id \
+        where Retaurapp.Categorias.id = {category_id}'))
+        result_dict = result.mappings().all()
+    return result_dict

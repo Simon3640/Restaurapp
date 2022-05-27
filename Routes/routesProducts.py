@@ -11,7 +11,7 @@ from pydantic import Field
 from Schemas.schemas import Product
 from Config.db import engine
 from Models.ModelProduct import modelProduct
-from UsefulFunctions import GetColumn, InsertINTO, copiarImagen, deleteData, showItemFromTable, updateData, uploadData
+from UsefulFunctions import GetColumn, InsertINTO, copiarImagen, deleteData, showAllData, showItemFromTable, updateData, uploadData
 
 Route=APIRouter()
 
@@ -57,15 +57,15 @@ async def createProduct(
         
     """
 
-    indexid = await GetColumn('Categorias','Name')
-    indexid = indexid.index(Category)
-    idCategoria = await GetColumn('Categorias','id')
-    idCategoria = idCategoria[indexid]
-    idProduct = await GetColumn('Producto','id')
-    idProduct = idProduct[-1]+1
-    await InsertINTO('Categoria_producto',(idCategoria,idProduct))
+    indexid = GetColumn('Categorias','Name').index(Category)
+    idCategoria = GetColumn('Categorias','id')[indexid]
+
 
     await uploadData(dataProduct.dict(),tableProduct)
+
+    idProduct = GetColumn('Producto','id')[-1]
+
+    await InsertINTO('Categoria_producto',(idCategoria,idProduct))
 
     return Response(status_code=status.HTTP_201_CREATED)
 
@@ -189,17 +189,17 @@ async def updateProduct(
     path='/',
     response_model=List[Product],
     tags = ['client_views'],
-    summary = 'Permite visualizar todos los productos en la base de datos'
-)
-def showProducts():
+    summary = 'Permite visualizar todos los productos en la base de datos',
+    deprecated=True,
+    )
+async def showProducts():
     """Crea la vista de los productos en la base de datos
 
     Returns:
         
         Lista de productos
     """
-    with engine.connect() as conn:
-        result = conn.execute(tableProduct.select()).fetchall()
+    result = await showAllData(tableProduct)
     return result
 
 ##Vista de un unico producto
@@ -209,7 +209,7 @@ def showProducts():
     tags = ['client_views'],
     summary = 'Permite visualizar un unico producto'
 )
-def showProduct(product_id: int):
+async def showProduct(product_id: int):
     """AI is creating summary for showProduct
 
     Args:
@@ -220,7 +220,8 @@ def showProduct(product_id: int):
         
         informacion del producto con el id seleccionado
     """
-    result = showItemFromTable(tableProduct,product_id)
+    result = await showItemFromTable(tableProduct,product_id)
+    
     return result
 
 

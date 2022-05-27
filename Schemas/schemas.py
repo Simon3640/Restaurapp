@@ -65,13 +65,13 @@ class Category(BaseModel):
 class Add(BaseModel):
     id: Optional[int]
     
-    name: str = Field(
+    Name: str = Field(
         ...,
         min_length = 1,
         max_length = 45,
         example = "Tocineta"
     )
-    value: int = Field(
+    Value: int = Field(
         ...,
         gt = 0,
         le = 100000000000,

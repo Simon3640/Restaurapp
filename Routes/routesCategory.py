@@ -1,17 +1,13 @@
-from sqlite3 import connect
-from uuid import uuid4
-from shutil import copyfileobj
-
 #fastAPI
 from typing import List, Optional
-from fastapi import APIRouter, Body, File, Form, Path, Query, Response, UploadFile, status
+from fastapi import APIRouter, File, Form, Query, Response, UploadFile, status
 from pydantic import Field
 
 #Project
-from Schemas.schemas import Category
+from Schemas.schemas import Category, Product
 from Config.db import engine
 from Models.ModelCategory import modelCategory
-from UsefulFunctions import GetColumn, InsertINTO, copiarImagen
+from UsefulFunctions import GetColumn, Innerjoin, copiarImagen, deleteData, showAllData, uploadData
 
 Route = APIRouter()
 tableCategory = modelCategory.__table__
@@ -39,16 +35,14 @@ async def createCategory(
         
     """
 
-    
-    category_id = GetColumn('Producto','id')[-1]+1
+   
+    data = {'Name': category_name}
+    await uploadData(data, tableCategory)
+    category_id = await GetColumn('Categorias','id')[-1]
     if image:
         file_name1 = f'images/GaleryCategories/Category_{category_id}.jpg'
         await copiarImagen(file_name1,image)
-   
-
-    with engine.connect() as conn:
-        conn.execute(tableCategory.insert().values(Name=category_name))
-        return Response(status_code=status.HTTP_201_CREATED)
+    return Response(status_code=status.HTTP_201_CREATED)
 
 
 @Route.put(
@@ -78,7 +72,7 @@ async def updateCategory(
     summary = 'Elimina un producto',
     tags = ['Categories']
 )
-def deleteCategory(
+async def deleteCategory(
     category_id: int
 ):
     """Elimina una categoria de la base de datos
@@ -91,21 +85,30 @@ def deleteCategory(
 
         remueve la categoria y devuelve HTTP 204
     """
-    with engine.connect() as conn:
-        conn.execute(tableCategory.delete()\
-        .where(tableCategory.c.id == category_id))
+    await deleteData(tableCategory, category_id)
+
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @Route.get(
     path = '/categories',
     status_code = status.HTTP_200_OK,
-    tags = ['Categories']
+    tags = ['client_views'],
+    response_model = List[Category]
 )
-def showCategories():
-    with engine.connect() as conn:
-        result = conn.execute(tableCategory.select()).fetchall()
+async def showCategories():
+    result = await showAllData(tableCategory)
     return result
     
 
-
+@Route.get(
+    path = '/products/',
+    status_code = status.HTTP_200_OK,
+    tags = ['client_views'],
+    response_model=List[Product]
+)
+def showProductsByCategory(
+    category: int = Query(..., gt = 0, example = 0),
+    ):
+    result = Innerjoin(category)
+    return result
