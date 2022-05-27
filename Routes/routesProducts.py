@@ -1,6 +1,6 @@
 #python
+from email.policy import default
 from uuid import uuid4
-from shutil import copyfileobj
 
 #fastAPI
 from typing import List, Optional
@@ -11,7 +11,7 @@ from pydantic import Field
 from Schemas.schemas import Product
 from Config.db import engine
 from Models.ModelProduct import modelProduct
-from UsefulFunctions import GetColumn, InsertINTO
+from UsefulFunctions import GetColumn, InsertINTO, copiarImagen, deleteData, showAllData, showItemFromTable, updateData, uploadData
 
 Route=APIRouter()
 
@@ -35,9 +35,9 @@ def Home():
     summary = 'Permite la creacion de un producto',
     tags = ['Products']
     )
-def createProduct(
+async def createProduct(
     dataProduct: Product = Body(...),
-    Category : str = Query('No Category', enum=GetColumn('Categorias', 'Name')),
+    Category : Optional[str] = Query('No Category', enum = GetColumn('Categorias', 'Name')),
     ):
     """
     Path operation para crear un nuevo producto
@@ -59,13 +59,15 @@ def createProduct(
 
     indexid = GetColumn('Categorias','Name').index(Category)
     idCategoria = GetColumn('Categorias','id')[indexid]
-    idProduct = GetColumn('Producto','Product_id')[-1]+1
-    InsertINTO('Categoria_producto',(idCategoria,idProduct))
 
-    with engine.connect() as conn:
-        new_product = dataProduct.dict()
-        conn.execute(tableProduct.insert().values(new_product))
-        return Response(status_code=status.HTTP_201_CREATED)
+
+    await uploadData(dataProduct.dict(),tableProduct)
+
+    idProduct = GetColumn('Producto','id')[-1]
+
+    await InsertINTO('Categoria_producto',(idCategoria,idProduct))
+
+    return Response(status_code=status.HTTP_201_CREATED)
 
 
 ##Elimina un producto
@@ -76,7 +78,7 @@ def createProduct(
     summary = 'Elimina un producto',
     tags = ['Products']
 )
-def deleteProduct(
+async def deleteProduct(
     product_id: int
 ):
     """Elimina un producto de la base de datos
@@ -90,9 +92,7 @@ def deleteProduct(
         remueve el producto y devuelve HTTP 204
     """
     
-    with engine.connect() as conn:
-        conn.execute(tableProduct.delete()\
-        .where(tableProduct.c.Product_id == product_id))
+    await deleteData(tableProduct, product_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
@@ -104,7 +104,7 @@ def deleteProduct(
     summary = 'Sube las imágenes de un producto',
     tags = ['Products']
 )
-def updateImages(
+async def updateImages(
     product_id: int = Path(
         ...,
         gt = 0,
@@ -138,18 +138,14 @@ def updateImages(
             status_code=status.HTTP_406_NOT_ACCEPTABLE,
             detail="Only .jpeg or .png  files allowed")
     
-    from os import makedirs, path
-    
     file_name1 = f'images/GaleryProduct{product_id}/Principal_Image.jpg'
-    makedirs(path.dirname(file_name1), exist_ok=True)
    
-    with open(file_name1, "wb") as buffer:
-        copyfileobj(image.file, buffer)
+    await copiarImagen(file_name1,image)
 
     for _,imG in enumerate(galery):
         file_name = f'images/GaleryProduct{product_id}/Image{_}.jpg'
-        with open(file_name, "wb") as buffer:
-            copyfileobj(imG.file, buffer)
+        await copiarImagen(file_name,imG)
+    
     return Response(status_code = status.HTTP_200_OK)
 
 ##Actualiza la informacion de un producto
@@ -160,10 +156,10 @@ def updateImages(
     summary = 'actualiza la informacion de un prodcuto',
     tags = ['Products']
 )
-def updateProduct(
+async def updateProduct(
     product_id: int,
-    dataProduct: Product = Body(...),
-    Category : str = Query('No Category', enum=GetColumn('Categorias', 'Name')),
+    dataProduct: Optional[Product] = Body(default=None),
+    Category : Optional[str] = Query(default=None, enum=GetColumn('Categorias', 'Name')),
 ):
     """Este path operation realiza una actualizacion en la base de datos del producto
 
@@ -176,15 +172,13 @@ def updateProduct(
 
         actualiza la base de datos y devuelve un response HTTP 200
     """
-    indexid = GetColumn('Categorias','Name').index(Category)
-    idCategoria = GetColumn('Categorias','id')[indexid]
-    InsertINTO('Categoria_producto',(idCategoria,product_id))
-    upDataProduct=dataProduct.dict()
-    with engine.connect() as conn:
-        conn.execute(
-            tableProduct.update().values(upDataProduct)\
-                .where(tableProduct.c.Product_id == product_id)
-        )
+    if Category:
+        indexid = GetColumn('Categorias','Name').index(Category)
+        idCategoria = GetColumn('Categorias','id')[indexid]
+        InsertINTO('Categoria_producto',(idCategoria,product_id))
+    if dataProduct:
+        upDataProduct=dataProduct.dict()
+        await updateData(upDataProduct,tableProduct,product_id)
     return Response(status_code= status.HTTP_200_OK)
 
 
@@ -195,17 +189,17 @@ def updateProduct(
     path='/',
     response_model=List[Product],
     tags = ['client_views'],
-    summary = 'Permite visualizar todos los productos en la base de datos'
-)
-def showProducts():
+    summary = 'Permite visualizar todos los productos en la base de datos',
+    deprecated=True,
+    )
+async def showProducts():
     """Crea la vista de los productos en la base de datos
 
     Returns:
         
         Lista de productos
     """
-    with engine.connect() as conn:
-        result = conn.execute(tableProduct.select()).fetchall()
+    result = await showAllData(tableProduct)
     return result
 
 ##Vista de un unico producto
@@ -215,7 +209,7 @@ def showProducts():
     tags = ['client_views'],
     summary = 'Permite visualizar un unico producto'
 )
-def showProduct(product_id: int):
+async def showProduct(product_id: int):
     """AI is creating summary for showProduct
 
     Args:
@@ -226,9 +220,8 @@ def showProduct(product_id: int):
         
         informacion del producto con el id seleccionado
     """
-    with engine.connect() as conn:
-        result = conn.execute(tableProduct.select()\
-            .where(tableProduct.c.Product_id == product_id)).first()
+    result = await showItemFromTable(tableProduct,product_id)
+    
     return result
 
 

@@ -1,16 +1,13 @@
-from uuid import uuid4
-from shutil import copyfileobj
-
 #fastAPI
 from typing import List, Optional
-from fastapi import APIRouter, Body, File, Form, Path, Query, Response, UploadFile, status
+from fastapi import APIRouter, File, Form, Query, Response, UploadFile, status
 from pydantic import Field
 
 #Project
-from Schemas.schemas import Category
+from Schemas.schemas import Category, Product
 from Config.db import engine
 from Models.ModelCategory import modelCategory
-from UsefulFunctions import GetColumn, InsertINTO
+from UsefulFunctions import GetColumn, Innerjoin, copiarImagen, deleteData, showAllData, uploadData
 
 Route = APIRouter()
 tableCategory = modelCategory.__table__
@@ -21,9 +18,9 @@ tableCategory = modelCategory.__table__
     summary = 'Permite la creacion de un producto',
     tags = ['Categories']
     )
-def createCategory(
-    category_name: str = Form(...),
-    image: UploadFile = File(None)
+async def createCategory(
+    category_name: str = Form(..., max_length = 45, min_length = 1),
+    image: Optional[UploadFile] = File(None)
     ):
     """
     Path operation para crear una nueva categoria
@@ -38,19 +35,36 @@ def createCategory(
         
     """
 
-    
-    category_id = GetColumn('Producto','Product_id')[-1]+1
-
-    file_name1 = f'images/GaleryCategories/Category_{category_id}.jpg'
-    with open(file_name1, "wb") as buffer:
-        copyfileobj(image.file, buffer)
    
+    data = {'Name': category_name}
+    await uploadData(data, tableCategory)
+    category_id = await GetColumn('Categorias','id')[-1]
+    if image:
+        file_name1 = f'images/GaleryCategories/Category_{category_id}.jpg'
+        await copiarImagen(file_name1,image)
+    return Response(status_code=status.HTTP_201_CREATED)
 
-    with engine.connect() as conn:
-        conn.execute(tableCategory.insert().values(Name=category_name))
-        return Response(status_code=status.HTTP_201_CREATED)
 
-
+@Route.put(
+    path = '/category/update/{category_id}',
+    status_code = status.HTTP_200_OK,
+    summary = 'Permite la actualización de una categoría',
+    tags = ['Categories']
+)
+async def updateCategory(
+    category_id : int,
+    dataCategory : Optional[str] = Form(min_length=1, max_length=45, default=None),
+    image : Optional[UploadFile] = File(None)
+):
+    if image:
+        file_name1 = f'images/GaleryCategories/Category_{category_id}.jpg'
+        await copiarImagen(file_name1,image)
+    
+    if dataCategory:
+        with connect() as conn:
+            conn.execute(tableCategory.update().values(Name=dataCategory)\
+                .where(tableCategory.c.id == category_id))
+    return Response(status_code = status.HTTP_200_OK)
 
 @Route.delete(
     path = '/category/delete/{category_id}',
@@ -58,7 +72,7 @@ def createCategory(
     summary = 'Elimina un producto',
     tags = ['Categories']
 )
-def deleteCategory(
+async def deleteCategory(
     category_id: int
 ):
     """Elimina una categoria de la base de datos
@@ -71,21 +85,30 @@ def deleteCategory(
 
         remueve la categoria y devuelve HTTP 204
     """
-    with engine.connect() as conn:
-        conn.execute(tableCategory.delete()\
-        .where(tableCategory.c.id == category_id))
+    await deleteData(tableCategory, category_id)
+
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @Route.get(
     path = '/categories',
     status_code = status.HTTP_200_OK,
-    tags = ['Categories']
+    tags = ['client_views'],
+    response_model = List[Category]
 )
-def showCategories():
-    with engine.connect() as conn:
-        result = conn.execute(tableCategory.select()).fetchall()
+async def showCategories():
+    result = await showAllData(tableCategory)
     return result
     
 
-
+@Route.get(
+    path = '/products/',
+    status_code = status.HTTP_200_OK,
+    tags = ['client_views'],
+    response_model=List[Product]
+)
+def showProductsByCategory(
+    category: int = Query(..., gt = 0, example = 0),
+    ):
+    result = Innerjoin(category)
+    return result

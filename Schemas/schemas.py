@@ -1,10 +1,9 @@
 from typing import Optional
-from fastapi import File, UploadFile
 from pydantic import BaseModel, Field
 
 
 class Product(BaseModel):
-    Product_id: Optional[int]
+    id: Optional[int]
 
     Product_name: str = Field(
         ...,
@@ -43,7 +42,7 @@ class Product(BaseModel):
     )
 
 class Ingredients(BaseModel):
-    Ingridients_id : Optional[int]
+    id : Optional[int]
 
     Name: str = Field(
         ...,
@@ -64,15 +63,15 @@ class Category(BaseModel):
     )
 
 class Add(BaseModel):
-    Add_id: Optional[int]
+    id: Optional[int]
     
-    name: str = Field(
+    Name: str = Field(
         ...,
         min_length = 1,
         max_length = 45,
         example = "Tocineta"
     )
-    value: int = Field(
+    Value: int = Field(
         ...,
         gt = 0,
         le = 100000000000,
