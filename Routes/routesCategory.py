@@ -1,6 +1,6 @@
 #fastAPI
 from typing import List, Optional
-from fastapi import APIRouter, File, Form, Query, Response, UploadFile, status
+from fastapi import APIRouter, Body, File, Form, Query, Response, UploadFile, status
 from pydantic import Field
 
 #Project
@@ -19,8 +19,7 @@ tableCategory = modelCategory.__table__
     tags = ['Categories']
     )
 async def createCategory(
-    category_name: str = Form(..., max_length = 45, min_length = 1),
-    image: Optional[UploadFile] = File(None)
+    category: Category = Body(...)
     ):
     """
     Path operation para crear una nueva categoria
@@ -36,12 +35,12 @@ async def createCategory(
     """
 
    
-    data = {'Name': category_name}
+    data = category.dict()
     await uploadData(data, tableCategory)
-    category_id = await GetColumn('Categorias','id')[-1]
-    if image:
-        file_name1 = f'images/GaleryCategories/Category_{category_id}.jpg'
-        await copiarImagen(file_name1,image)
+    # category_id = await GetColumn('Categorias','id')[-1]
+    # if image:
+    #     file_name1 = f'images/GaleryCategories/Category_{category_id}.jpg'
+    #     await copiarImagen(file_name1,image)
     return Response(status_code=status.HTTP_201_CREATED)
 
 

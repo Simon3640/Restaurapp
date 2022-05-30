@@ -37,7 +37,8 @@ def Home():
     )
 async def createProduct(
     dataProduct: Product = Body(...),
-    Category : Optional[str] = Query('No Category', enum = GetColumn('Categorias', 'Name')),
+    Category : Optional[str] = Form(None, enum = GetColumn('Categorias', 'Name')),
+    Adds: Optional[List[str]] = Form(None,enum=GetColumn('Adiciones', 'Name')),
     ):
     """
     Path operation para crear un nuevo producto

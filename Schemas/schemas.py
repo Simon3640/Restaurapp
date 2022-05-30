@@ -61,6 +61,9 @@ class Category(BaseModel):
         max_length = 45,
         example = "Hamburguesas"
     )
+    img:str = Field(
+        ...,
+        min_length=1)
 
 class Add(BaseModel):
     id: Optional[int]
