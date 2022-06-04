@@ -8,7 +8,7 @@ from fastapi import APIRouter, Body, File, Form, Path, Query, Response, status, 
 from pydantic import Field
 
 #Project
-from Schemas.schemas import Product
+from Schemas.schemas import Product, ProductCategory
 from Config.db import engine
 from Models.ModelProduct import modelProduct
 from UsefulFunctions import GetColumn, InsertINTO, copiarImagen, deleteData, showAllData, showItemFromTable, updateData, uploadData
@@ -36,8 +36,7 @@ def Home():
     tags = ['Products']
     )
 async def createProduct(
-    dataProduct: Product = Body(...),
-    Category : Optional[str] = Query('No Category', enum = GetColumn('Categorias', 'Name')),
+    dataProduct: ProductCategory = Body(...),
     ):
     """
     Path operation para crear un nuevo producto
@@ -56,12 +55,15 @@ async def createProduct(
         status code 201
         
     """
-
+    dictProduct=dataProduct.dict()
+    Category = dictProduct['Category']
+    del dictProduct['Category']
+    
     indexid = GetColumn('Categorias','Name').index(Category)
     idCategoria = GetColumn('Categorias','id')[indexid]
+    
 
-
-    await uploadData(dataProduct.dict(),tableProduct)
+    await uploadData(dictProduct,tableProduct)
 
     idProduct = GetColumn('Producto','id')[-1]
 
