@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, Field
 
 
@@ -40,6 +40,11 @@ class Product(BaseModel):
         ...,
         example = "image/defaultimage.jpg"
     )
+
+class ProductCategory(Product):
+    Category: Optional[str] = Field(
+        ...,
+        )
 
 class Ingredients(BaseModel):
     id : Optional[int]
