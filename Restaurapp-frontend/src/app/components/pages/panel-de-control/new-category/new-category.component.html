@@ -1,0 +1,32 @@
+<form clasw="need-validation" novalidate [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <h1 class="h3 mb-3 fw-normal">Por favor ingrese los datos de la nueva categoría</h1>
+
+    <div class="form-floating">
+      <input 
+      class="form-control" 
+      id="floatingInput" 
+      placeholder="Perros calientes" 
+      formControlName="Name" 
+      [ngClass]="{ 'is-invalid': categoryForm.get('Name')?.errors?.['required'] && categoryForm.get('Name')?.touched }"
+      required
+      />
+      <label for="floatingInput">Nombre</label>
+    </div>
+    <div class="form-floating">
+      <input  
+      class="form-control" 
+      id="floatingPassword" 
+      placeholder="Password"
+      formControlName="img"
+      [ngClass]="{ 'is-invalid': categoryForm.get('img')?.errors?.['required'] && categoryForm.get('img')?.touched }"
+        required
+      />
+      <label for="floatingPassword">Imagen</label>
+    </div>
+    <button 
+    class="w-100 btn btn-dark btn-primary" 
+    type="submit" 
+    [disabled]="categoryForm.invalid">
+    Crear categoría</button>
+    <p class="mt-5 mb-3 text-muted">© 2022</p>
+  </form>

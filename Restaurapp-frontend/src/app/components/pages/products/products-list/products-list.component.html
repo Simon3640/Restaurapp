@@ -1,0 +1,22 @@
+<div class="row" *ngIf="products$ | async as products">
+    <div class="col-xs-12 col-sm-6 col-md-4 product-container" *ngFor="let product of products">
+        <div class="card">
+            <div class="image">
+                <a [routerLink]="['/product-details',product.id]">
+                    <img [src]="product.Image" [alt]="product.Product_name"
+                    class="card-img-top">
+                </a>
+            </div>
+            <div class="card-inner" [routerLink]="['/product-details',product.id]">
+                <div class="header">
+                    <a [routerLink]="['product-details',product.id]"><h2>{{product.Product_name}}</h2> </a>
+                    <small class="text-muted">{{product.Short_Description}}</small>
+                </div>
+            </div>
+        </div>
+        <div class="bottomProduct" >
+            <p>{{"$"+product.Value}}</p>
+            <button class="btn btn-success" (click)="openSM()">Agregar a la orden</button>
+        </div>
+    </div>
+</div>

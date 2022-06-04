@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 category-container" *ngFor="let category of categories">
+        <div class="card">
+            <div class="image">
+                <a [routerLink]="['/products-list',category.id]">
+                    <img [src]="category.img" [alt]="category.Name"
+                    class="card-img-top">
+                </a>
+            </div>
+            <div class="card-inner" [routerLink]="['/products-list',category.id]">
+                <div class="header">
+                    <a [routerLink]="['/products-list',category.id]"><h2>{{category.Name}}</h2> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

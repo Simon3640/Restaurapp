@@ -1,0 +1,91 @@
+<form class="need-validation container" novalidate [formGroup]="productForm">
+    <h1 class="h3 mb-3 fw-normal">Por favor ingrese los datos del nuevo producto</h1>
+
+    <div class="form-floating">
+      <input 
+      class="form-control" 
+      id="floatingInput" 
+      placeholder="Perros calientes" 
+      formControlName="Name" 
+      [ngClass]="{ 'is-invalid': isInvalidForm('Name') }"
+      required
+      />
+      <label for="floatingInput">Nombre</label>
+    </div>
+    <div class="invalid-feedback" style="display:block">
+      <div class="alert alert-secondary" *ngIf="productForm.controls['Name'].hasError('minlength')">
+        El nombre debe tener al menos 3 caracteres
+      </div>
+      <div class="alert alert-secondary" *ngIf="productForm.controls['Name'].hasError('maxlength')">
+        El nombre debe tener menos de 255 caracteres
+      </div>
+    </div>
+    <div class="alert alert-secondary" *ngIf="isInvalidForm('Name')">
+      <p>El nombre es requerido</p>
+    </div>
+
+    <div class="form-floating">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">$</span>
+        </div>
+        <input  
+        type="number"
+        class="form-control" 
+        id="floatingPassword" 
+        placeholder="Valor"
+        formControlName="Value"
+        [ngClass]="{ 'is-invalid': isInvalidForm('Value') }"
+        required
+        />
+      </div>
+    </div>
+    <div class="invalid-feedback" style="display:block">
+      <div class="alert alert-secondary" *ngIf="productForm.controls['Value'].hasError('min')">
+        <p >El valor debe superar el minimo de 0 </p>
+      </div>
+      <div class="alert alert-secondary" *ngIf="productForm.controls['Value'].hasError('max')">
+        <p>El valor no debe superar 100000000000 por seguridad</p>
+      </div>
+      <div class="alert alert-info" *ngIf="!Entero(productForm.get('Value')?.value) && productForm.get('Value')?.dirty">
+        <p>Recuerda usar . unicamente para decimales, por ejemplo poner 20000 para 20 mil, esto para que las estadísticas funcionen correctamente</p>
+      </div>
+      </div>
+    <div class="form-floating">
+      <textarea
+      type="text"
+      class="form-control Description" 
+      id="floatingPassword" 
+      formControlName="Description"
+      [ngClass]="{ 'is-invalid': productForm.get('Description')?.errors?.['required'] && productForm.get('Description')?.touched }"
+        required
+      ></textarea>
+      <label for="floatingPassword">Descripción</label>
+    </div>
+    <div class="invalid-feedback" style="display:block">
+      <div class="alert alert-secondary" *ngIf="isInvalidForm('Description')">
+        <p >La descripción es requerida</p>
+      </div>
+      <div class="alert alert-secondary" *ngIf="productForm.controls['Description'].hasError('minlength')">
+        <p>La descripción debe tener menos de 20 caracteres</p>
+      </div>
+      <div class="alert alert-secondary" *ngIf="productForm.controls['Description'].hasError('maxlength')">
+        <p>La descripción debe tener menos de 300 caracteres</p>
+      </div>
+    </div>
+    <div class="form-floating">
+      <textarea  
+      type="text"
+      class="form-control Short_Description" 
+      rows="5"
+      formControlName="Short_Description"
+      ></textarea>
+      <label for="floatingPassword">Descripción corta</label>
+    </div>
+    <button 
+    class="w-100  btn btn-dark btn-primary" 
+    type="submit" 
+    [disabled]="productForm.invalid">
+    Crear Producto</button>
+    <p class="mt-5 mb-3 text-muted">© 2022</p>
+  </form>
