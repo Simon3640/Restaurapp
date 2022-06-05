@@ -18,6 +18,7 @@ export class NewCategoryComponent implements OnInit {
   }
 
   onSubmit(){
+    console.log(this.categoryForm.value);
     this.categorySvc.postCategory(this.categoryForm.value).subscribe(data => console.log(data));
   }
 

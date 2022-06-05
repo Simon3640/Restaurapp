@@ -7,4 +7,52 @@
 
 .container{
     max-width: 600px;
+    h1{
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+        color:var(--color-primary);
+    }
+
 }
+
+.btn-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 20px 20px 0 0;
+}
+
+.btn-circle{
+    background-color: var(--color-primary);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border-width: 2px;
+    border-color: var(black);
+    font-size: 30px;
+    color:white;
+    text-align: center;
+    justify-content: center;
+}
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+ }
+
+ .div-category{
+    display: flex;
+    flex-direction: row;
+    select{
+        width: 100%;
+        border-radius: 5px;
+    }
+    label{
+        font-size: 1.2rem;
+        color: white;
+        padding: 5px;
+        background-color: var(--color-primary);
+        border-radius: 5px;
+    }
+ }

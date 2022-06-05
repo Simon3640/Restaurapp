@@ -1,2 +1,7 @@
-<button class="btn btn-dark" routerLink="/new_category">Crear nueva categoría</button>
-<button class="btn btn-dark" routerLink="/new_product">Crear nuevo producto</button>
+
+<div class="container">
+<button class="btn btn-dark" (click)="div1=!div1">Crear nuevo producto</button>
+    <app-new-product *ngIf="div1"></app-new-product>
+<button class="btn btn-dark" (click)="div2=!div2">Crear nueva categoría</button>
+    <app-new-category *ngIf="div2"></app-new-category>
+</div>

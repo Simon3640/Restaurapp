@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 class Product(BaseModel):
     id: Optional[int]
 
-    Product_name: str = Field(
+    Name: str = Field(
         ...,
         min_length = 1,
         max_length = 150,
@@ -32,12 +32,10 @@ class Product(BaseModel):
     )
 
     Image: Optional[str] = Field(
-        ...,
         example = "image/defaultimage.jpg"
     )
 
     Image_Galery: Optional[str] = Field(
-        ...,
         example = "image/defaultimage.jpg"
     )
 

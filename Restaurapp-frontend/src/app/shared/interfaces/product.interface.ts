@@ -1,9 +1,10 @@
 export interface Product {
     id?:                number;
-    Product_name:       string;
+    Name:       string;
     Description:        string;
-    Short_Description:  string;
+    Short_Description?: string;
     Value:              number;
     Image?:             string;
     Image_Galery?:      string;
+    Category?:          string;
 }

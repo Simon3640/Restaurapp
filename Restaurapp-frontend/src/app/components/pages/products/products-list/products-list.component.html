@@ -3,13 +3,13 @@
         <div class="card">
             <div class="image">
                 <a [routerLink]="['/product-details',product.id]">
-                    <img [src]="product.Image" [alt]="product.Product_name"
+                    <img [src]="product.Image" [alt]="product.Name"
                     class="card-img-top">
                 </a>
             </div>
             <div class="card-inner" [routerLink]="['/product-details',product.id]">
                 <div class="header">
-                    <a [routerLink]="['product-details',product.id]"><h2>{{product.Product_name}}</h2> </a>
+                    <a [routerLink]="['product-details',product.id]"><h2>{{product.Name}}</h2> </a>
                     <small class="text-muted">{{product.Short_Description}}</small>
                 </div>
             </div>

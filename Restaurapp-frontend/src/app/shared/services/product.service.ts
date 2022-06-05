@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from '@shared/interfaces/product.interface';
 
 @Injectable({
@@ -15,5 +15,13 @@ export class ProductService {
   }
   getDetails(id: number) {
     return this.http.get<Product>(`http://localhost:8000/product/${id}`);
+  }
+
+  postProduct(product: any) {
+    const prueba :Product = product;
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json')
+    return this.http.post('http://localhost:8000/product/new', prueba, {headers: headers});
+  
   }
 }

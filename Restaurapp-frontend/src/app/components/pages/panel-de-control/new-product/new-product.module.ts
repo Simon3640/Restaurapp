@@ -10,7 +10,9 @@ import { NewProductRoutingModule } from './new-product-routing.module';
   ],
   imports: [
     CommonModule,
-    NewProductRoutingModule
+    NewProductRoutingModule,
+  ],
+  exports:[
   ]
 })
 export class NewProductModule { }
