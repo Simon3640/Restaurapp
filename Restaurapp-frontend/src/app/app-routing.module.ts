@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'panel-de-control', loadChildren: () => import('./components/pages/panel-de-control/panel-de-control.module').then(m => m.PanelDeControlModule) },
   { path: 'new_category', loadChildren: () => import('./components/pages/panel-de-control/new-category/new-category.module').then(m => m.NewCategoryModule) },
   { path: 'new_product', loadChildren: () => import('./components/pages/panel-de-control/new-product/new-product.module').then(m => m.NewProductModule) },
+  { path: 'product-panel', loadChildren: () => import('./components/pages/panel-de-control/product-panel/product-panel.module').then(m => m.ProductPanelModule) },
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ProductService } from '@app/shared/services/product.service';
 import { Product } from '@app/shared/interfaces/product.interface';
 import { Observable, take } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -10,16 +11,28 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductDetailsComponent implements OnInit {
 
-  product$: Observable<Product> | undefined;
+  product: any;
+  @Input() id: number=0;
 
-  constructor(private route:ActivatedRoute, private productSvc:ProductService) { }
-
+  constructor(
+    private route:ActivatedRoute,
+    private productSvc:ProductService,
+    private modal: NgbModal
+  ) { }
   ngOnInit(): void {
-
-    this.route.params.pipe(take(1)).subscribe((params) => {
-      const id = params['id'];
-      this.product$ = this.productSvc.getDetails(id);
-    });
+    this.productSvc.getDetails(this.id).subscribe(
+      (res:any) => {
+        const result = res;
+        this.product = result;
+      }
+    )
   }
 
+  close(){
+      this.modal.dismissAll('reason');
+  }
+  add(){
+    console.log(this.product);
+    this.close();
+  }
 }

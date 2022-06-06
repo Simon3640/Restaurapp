@@ -188,11 +188,10 @@ async def updateProduct(
 #Vistas de los productos
 ##Vista completa de los productos
 @Route.get(
-    path='/',
+    path='/products',
     response_model=List[Product],
     tags = ['client_views'],
     summary = 'Permite visualizar todos los productos en la base de datos',
-    deprecated=True,
     )
 async def showProducts():
     """Crea la vista de los productos en la base de datos

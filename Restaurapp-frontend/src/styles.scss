@@ -11,6 +11,7 @@
     box-sizing: border-box;
     margin: 10px 0 ;
     align-items: center;
+    width: 100%;
     background-color: rgb(255, 255, 255);
     max-width: 529px;
     transition: all 0.2s ease-in-out;
@@ -23,14 +24,27 @@
         width: 100%;
     }
     .card-inner {
+        width: 100%;
         padding:10px;
+        .header{
+            display: flex;
+            justify-content: center;   
+            align-items: center; 
+            flex-direction: column;
+            text-align: justify;
+            white-space: initial;
+            small{
+                width: 100%;
+            }
+            .title{
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: rgb(46, 134, 227);
+                margin-bottom: 10px;
+            }
+        }
     }
-    .header{
-        display: flex;
-        justify-content: center;   
-        align-items: center; 
-        flex-direction: column;
-    }
+    
 
     h2{
         font-weight: bold;
@@ -54,6 +68,8 @@
     align-items: center;
     flex-direction: column;
 }
-
+html{
+    overflow-x: hidden !important;
+}
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

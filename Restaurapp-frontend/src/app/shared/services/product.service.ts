@@ -13,6 +13,10 @@ export class ProductService {
   const filter = 'http://localhost:8000/products/?category=' + query;
   return this.http.get<Product[]>(filter);
   }
+
+  getAllProducts() {
+  return this.http.get<Product[]>('http://localhost:8000/products');
+  }
   getDetails(id: number) {
     return this.http.get<Product>(`http://localhost:8000/product/${id}`);
   }
