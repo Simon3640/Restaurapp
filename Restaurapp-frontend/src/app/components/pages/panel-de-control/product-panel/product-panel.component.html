@@ -1,0 +1,38 @@
+
+<div class="containerprincipal">
+    <div class="container-boton-category">
+        <form>
+            <Select>
+                <option value="1">Categoria 1</option>
+                <option value="2">Categoria 2</option>
+                <option value="3">Categoria 3</option>
+            </Select>
+        </form>
+        <button class="btn btn-dark" >Crear nuevo producto</button>
+        
+    </div>
+    <div class="container-product-panel">
+        <div class="container-product-panel-item" *ngFor="let product of products">
+            <div class="container-product-panel-item-image">
+                <img [src]="product.Image" alt="" />
+            </div>
+            <div class="container-product-panel-item-Name">
+                <h3>{{product.Name}}</h3>
+            </div>
+            <div class="container-product-panel-item-Description">
+                <p>{{product.Description}}</p>
+            </div>
+            <div class="container-product-panel-item-Short_Description">
+                <p>{{product.Short_Description}}</p>
+            </div>
+            <div class="container-product-panel-item-Price">
+                <h3>{{product.Value}}</h3>
+            </div>
+            <div class="container-product-panel-item-Action">
+                <button class="btn btn-dark">Editar</button>
+                <button class="btn btn-dark">Eliminar</button>
+            </div>
+        </div>
+    </div>
+    
+</div>

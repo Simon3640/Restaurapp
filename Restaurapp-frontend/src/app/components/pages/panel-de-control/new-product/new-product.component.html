@@ -1,5 +1,5 @@
-<form class="need-validation container" novalidate [formGroup]="productForm">
-    <h1 class="h3 mb-3 fw-normal">Por favor ingrese los datos del nuevo producto</h1>
+<form class="need-validation container" novalidate [formGroup]="productForm" (submit)="onSubmit()">
+    <h1 class="h3 mb-3 fw-normal">NUEVO PRODUCTO</h1>
 
     <div class="form-floating">
       <input 
@@ -27,7 +27,7 @@
     <div class="form-floating">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text">$</span>
+          <span class="input-group-text" style="background-color:var(--color-primary); color:white;">$</span>
         </div>
         <input  
         type="number"
@@ -82,10 +82,62 @@
       ></textarea>
       <label for="floatingPassword">Descripción corta</label>
     </div>
-    <button 
-    class="w-100  btn btn-dark btn-primary" 
-    type="submit" 
-    [disabled]="productForm.invalid">
-    Crear Producto</button>
-    <p class="mt-5 mb-3 text-muted">© 2022</p>
+    <div class=" div-category">
+      <label>Categoría</label>
+      <select class="selectpicker" 
+      datalive-search="true"
+      formControlName="Category"
+      >
+        <option *ngFor="let category of categories" [value]="category.Name">{{category.Name}}</option>
+      </select>
+    </div>
+    <div class="alert alert-secondary" *ngIf="isInvalidForm('Category')">
+      <p>Debes seleccionar una categoría</p>
+    </div>
+
+    <div class="form-floating">
+      <input 
+      class="form-control" 
+      id="floatingInput" 
+      placeholder="Perros calientes" 
+      formControlName="Image" 
+      [ngClass]="{ 'is-invalid': isInvalidForm('Image') }"
+      required
+      />
+      <label for="floatingInput">Imagen</label>
+    </div>
+    <div class="alert alert-secondary" *ngIf="isInvalidForm('Image')">
+      <p>La imagen es requerido</p>
+    </div>
+    <div class="tagcontainer">
+      <label>Ingredientes</label>
+      <ng-select 
+      class="custom"
+      [items]="items"
+      [addTag]="true"
+      placeholder="Tocineta"
+      [multiple]="true"
+      [selectOnTab]="true"
+      [isOpen]="false"
+      formControlName="Ingredients">
+      
+      </ng-select>
+      <div class = "alert alert-info" *ngIf="productForm.get('Ingredients')?.touched && productForm.get('Ingredients')?.value.length == 0 ">
+        <span>Agregar ingredientes opcionales a 
+        tu producto hará que los clientes puedan 
+        decidir al momento de pedir si quieren o no 
+        alguno de los ingredientes opcionales, <b>esta opción no es obligatoria.</b></span>
+      </div>
+
+
+    </div>
+    
+
+    <div class="btn-container">
+      <button 
+      class=" btn btn-dark btn-primary btn-circle" 
+      type="submit" 
+      [disabled]="productForm.invalid"> → </button>
+    </div>
+
   </form>

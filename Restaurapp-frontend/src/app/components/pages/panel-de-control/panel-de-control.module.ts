@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
 import { PanelDeControlRoutingModule } from './panel-de-control-routing.module';
 import { PanelDeControlComponent } from './panel-de-control.component';
 import { NewCategoryComponent } from './new-category/new-category.component';
 import { NewProductComponent } from './new-product/new-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ProductPanelComponent } from './product-panel/product-panel.component';
 
-const myComponents = [NewCategoryComponent, NewProductComponent]
+const myComponents = [NewCategoryComponent, NewProductComponent, ProductPanelComponent]
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ const myComponents = [NewCategoryComponent, NewProductComponent]
     PanelDeControlRoutingModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    NgSelectModule,
+    ReactiveFormsModule,
   ],
   exports: [...myComponents]
 })

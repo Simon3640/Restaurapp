@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 class Product(BaseModel):
     id: Optional[int]
 
-    Product_name: str = Field(
+    Name: str = Field(
         ...,
         min_length = 1,
         max_length = 150,
@@ -14,7 +14,7 @@ class Product(BaseModel):
 
     Description: Optional[str] = Field(
         ...,
-        min_length = 1,
+        min_length = 20,
         max_length = 300,
         example = "Deliciosa hamburguesa hecha con carne de res, queso americano y lechuga romana"
     )
@@ -32,14 +32,14 @@ class Product(BaseModel):
     )
 
     Image: Optional[str] = Field(
-        ...,
         example = "image/defaultimage.jpg"
     )
 
     Image_Galery: Optional[str] = Field(
-        ...,
         example = "image/defaultimage.jpg"
     )
+
+    Ingredients: List[str] = Field( example = 'Tocineta')
 
 class ProductCategory(Product):
     Category: Optional[str] = Field(
@@ -63,11 +63,10 @@ class Category(BaseModel):
     Name: str = Field(
         ...,
         min_length = 1,
-        max_length = 45,
+        max_length = 255,
         example = "Hamburguesas"
     )
-    img:str = Field(
-        ...,
+    Image:str = Field(
         min_length=1)
 
 class Add(BaseModel):

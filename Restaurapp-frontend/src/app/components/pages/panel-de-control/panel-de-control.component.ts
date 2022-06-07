@@ -7,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PanelDeControlComponent implements OnInit {
 
-  constructor() { }
-
+  constructor( ) {
+   }
+  
+  div1=false;
+  div2=false
   ngOnInit(): void {
   }
 

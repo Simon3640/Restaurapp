@@ -4,20 +4,20 @@ from sqlalchemy import text
 
 def GetColumn(Table : str,columname : str):
      with engine.connect() as conn:
-         result = conn.execute(text(f'select {columname} from Retaurapp.{Table}'))
+         result = conn.execute(text(f'select {columname} from Restaurapp.{Table}'))
          result = [_[f"{columname}"] for _ in result]
      return result
 
 def GetTable(Table:str):
     with engine.connect() as conn:
-        result = conn.execute(text(f'SELECT * FROM Retaurapp.{Table}'))
+        result = conn.execute(text(f'SELECT * FROM Restaurapp.{Table}'))
         result_dict = result.mappings().all()
     return result_dict
 
 async def InsertINTO(Table,data : tuple):
     with engine.connect() as conn:
         conn.execute(text('SET FOREIGN_KEY_CHECKS=0;'))
-        conn.execute(text(f'INSERT INTO Retaurapp.{Table} VALUES (Null,'+str(data)[1:]))
+        conn.execute(text(f'INSERT INTO Restaurapp.{Table} VALUES (Null,'+str(data)[1:]))
 
 
 async def showItemFromTable(Table,id : int):
@@ -59,10 +59,10 @@ async def showAllData(table):
 
 def Innerjoin(category_id : int):
     with engine.connect() as conn:
-        result = conn.execute(text(f'SELECT Retaurapp.Producto.* \
-        FROM Retaurapp.Producto \
-            INNER JOIN Retaurapp.Categoria_producto ON Retaurapp.Producto.id = Retaurapp.Categoria_producto.id_producto \
-            INNER JOIN Retaurapp.Categorias ON Retaurapp.Categoria_producto.id_categoria = Retaurapp.Categorias.id \
-        where Retaurapp.Categorias.id = {category_id}'))
+        result = conn.execute(text(f'SELECT Restaurapp.Producto.* \
+        FROM Restaurapp.Producto \
+            INNER JOIN Restaurapp.Categoria_producto ON Restaurapp.Producto.id = Restaurapp.Categoria_producto.id_producto \
+            INNER JOIN Restaurapp.Categoria ON Restaurapp.Categoria_producto.id_categoria = Restaurapp.Categoria.id \
+        where Restaurapp.Categoria.id = {category_id}'))
         result_dict = result.mappings().all()
     return result_dict

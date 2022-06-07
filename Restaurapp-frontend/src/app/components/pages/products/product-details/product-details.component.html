@@ -1,21 +1,21 @@
 
-<div class="row" *ngIf="product$ | async as product">
+<div class="row" *ngIf="product as product">
     <div class="col-xs-12 col-sm-6 col-md-4 product-container">
         <div class="card">
             <div class="image">
-
-                    <img [src]="product.Image" [alt]="product.Product_name"
+                    <img [src]="product?.Image" [alt]="product.Name"
                     class="card-img-top">
             </div>
             <div class="card-inner">
                 <div class="header">
-                <h2>{{product.Product_name}}</h2>
+                <h2>{{product.Name}}</h2>
                     <small class="text-muted">{{product.Description}}</small>
                 </div>
             </div>
         </div>
         <div class="bottomProduct" >
-            <button class="btn btn-success">Añadir</button>
+            <button class="btn btn-danger" (click)="close()"> close </button>
+            <button class="btn btn-success" (click)="add()">Añadir</button>
         </div>
     </div>
 </div>
