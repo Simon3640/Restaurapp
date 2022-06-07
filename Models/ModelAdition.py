@@ -1,16 +1,21 @@
-from sqlalchemy import Table
-from sqlalchemy.ext.declarative import declarative_base
-from Config.db import engine, meta_data
+from sqlalchemy import Integer, String, Column
+from Config.db import meta_data, Base
 
 
-
-Base = declarative_base()
 
 meta_data.reflect()
 
 class modelAdition(Base):
-    __table__ = Table('Adiciones', meta_data,
-                    autoload=True, autoload_with=engine)
+    # __table__ = Table('Adiciones', meta_data,
+    #                 autoload=True, autoload_with=engine)
+    __tablename__ = 'Adiciones'
+    id = Column(Integer, primary_key=True)
+    Name = Column(String(255), nullable=False)
+    Value = Column(Integer, nullable=False)
+    
+    def __init__(self, Name, Value):
+        self.Name= Name
+        self.Value = Value
 
 
 

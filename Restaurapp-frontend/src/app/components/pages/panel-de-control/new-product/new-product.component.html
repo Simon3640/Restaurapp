@@ -107,10 +107,32 @@
       <label for="floatingInput">Imagen</label>
     </div>
     <div class="alert alert-secondary" *ngIf="isInvalidForm('Image')">
-      <p>El nombre es requerido</p>
+      <p>La imagen es requerido</p>
+    </div>
+    <div class="tagcontainer">
+      <label>Ingredientes</label>
+      <ng-select 
+      class="custom"
+      [items]="items"
+      [addTag]="true"
+      placeholder="Tocineta"
+      [multiple]="true"
+      [selectOnTab]="true"
+      [isOpen]="false"
+      formControlName="Ingredients">
+      
+      </ng-select>
+      <div class = "alert alert-info" *ngIf="productForm.get('Ingredients')?.touched && productForm.get('Ingredients')?.value.length == 0 ">
+        <span>Agregar ingredientes opcionales a 
+        tu producto hará que los clientes puedan 
+        decidir al momento de pedir si quieren o no 
+        alguno de los ingredientes opcionales, <b>esta opción no es obligatoria.</b></span>
+      </div>
+
+
     </div>
     
-    
+
     <div class="btn-container">
       <button 
       class=" btn btn-dark btn-primary btn-circle" 

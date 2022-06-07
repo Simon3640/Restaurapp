@@ -6,6 +6,7 @@ from uuid import uuid4
 from typing import List, Optional
 from fastapi import APIRouter, Body, File, Form, Path, Query, Response, status, UploadFile, HTTPException
 from pydantic import Field
+from sqlalchemy import true
 
 #Project
 from Schemas.schemas import Product, ProductCategory
@@ -59,8 +60,8 @@ async def createProduct(
     Category = dictProduct['Category']
     del dictProduct['Category']
     
-    indexid = GetColumn('Categorias','Name').index(Category)
-    idCategoria = GetColumn('Categorias','id')[indexid]
+    indexid = GetColumn('Categoria','Name').index(Category)
+    idCategoria = GetColumn('Categoria','id')[indexid]
     
 
     await uploadData(dictProduct,tableProduct)
@@ -152,36 +153,38 @@ async def updateImages(
 
 ##Actualiza la informacion de un producto
 
-@Route.put(
-    path = '/product/update/{product_id}',
-    status_code = status.HTTP_200_OK,
-    summary = 'actualiza la informacion de un prodcuto',
-    tags = ['Products']
-)
-async def updateProduct(
-    product_id: int,
-    dataProduct: Optional[Product] = Body(default=None),
-    Category : Optional[str] = Query(default=None, enum=GetColumn('Categorias', 'Name')),
-):
-    """Este path operation realiza una actualizacion en la base de datos del producto
+# @Route.put(
+#     path = '/product/update/{product_id}',
+#     status_code = status.HTTP_200_OK,
+#     summary = 'actualiza la informacion de un prodcuto',
+#     tags = ['Products'],
+#     deprecated=True
+# )
+# async def updateProduct(
+#     product_id: int,
+#     dataProduct: Optional[Product] = Body(default=None),
+#     # Category : Optional[str] = Query(default=None, enum=GetColumn('Categoria', 'Name')),
 
-    Args:
+# ):
+#     """Este path operation realiza una actualizacion en la base de datos del producto
 
-        dataProduct (Product): informacion actualizada del producto
-        product_id (int): id del producto objetivo
+#     Args:
 
-    Returns:
+#         dataProduct (Product): informacion actualizada del producto
+#         product_id (int): id del producto objetivo
 
-        actualiza la base de datos y devuelve un response HTTP 200
-    """
-    if Category:
-        indexid = GetColumn('Categorias','Name').index(Category)
-        idCategoria = GetColumn('Categorias','id')[indexid]
-        InsertINTO('Categoria_producto',(idCategoria,product_id))
-    if dataProduct:
-        upDataProduct=dataProduct.dict()
-        await updateData(upDataProduct,tableProduct,product_id)
-    return Response(status_code= status.HTTP_200_OK)
+#     Returns:
+
+#         actualiza la base de datos y devuelve un response HTTP 200
+#     """
+#     if Category:
+#         indexid = GetColumn('Categoria','Name').index(Category)
+#         idCategoria = GetColumn('Categoria','id')[indexid]
+#         InsertINTO('Categoria_producto',(idCategoria,product_id))
+#     if dataProduct:
+#         upDataProduct=dataProduct.dict()
+#         await updateData(upDataProduct,tableProduct,product_id)
+#     return Response(status_code= status.HTTP_200_OK)
 
 
 

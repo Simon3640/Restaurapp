@@ -15,6 +15,8 @@ export class NewProductComponent implements OnInit {
 
   constructor(private productSvc:ProductService ,private fb: FormBuilder, private router:Router, private categorySvc: CategoryService) { }
 
+  items : String[] = [];
+
   productForm = this.fb.group({
     Name: ['',[Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
     Description: ['',[Validators.required, Validators.minLength(20), Validators.maxLength(300)]],
@@ -22,6 +24,7 @@ export class NewProductComponent implements OnInit {
     Value: [Number, [Validators.required, Validators.min(0), Validators.max(100000000000)]],
     Category: ['',[Validators.required]],
     Image: ['',[Validators.required]],
+    Ingredients: [this.items],
   });
 
   ngOnInit(): void {
@@ -40,6 +43,9 @@ export class NewProductComponent implements OnInit {
   }
 
   categories: Category[] = [];
+  onAdd(): void {
+    console.log(this.productForm.value);
+  }
 
   private getDataFromService(): void {
       this.categorySvc.getCategories().subscribe((res:any) => {

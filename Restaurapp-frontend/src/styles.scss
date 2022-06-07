@@ -1,5 +1,12 @@
 :root{
     --color-primary:rgb(46, 134, 227);
+    --davys-grey: #494947ff;
+    --queen-blue: #3c6895ff;
+    --bright-navy-blue: #3577bcff;
+    --bleu-de-france: #2e86e3ff;
+    --bleu-de-france-2: #408ae5ff;
+    --united-nations-blue: #498ce6ff;
+    --united-nations-blue-2: #4d8de7ff;
 }
 
 .container {
@@ -73,3 +80,4 @@ html{
 }
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+@import "~@ng-select/ng-select/themes/default.theme.css";

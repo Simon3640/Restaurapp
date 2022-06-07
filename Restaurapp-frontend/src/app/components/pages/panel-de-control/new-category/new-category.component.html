@@ -15,10 +15,9 @@
     <div class="form-floating">
       <input  
       class="form-control" 
-      id="floatingPassword" 
-      placeholder="Password"
-      formControlName="img"
-      [ngClass]="{ 'is-invalid': categoryForm.get('img')?.errors?.['required'] && categoryForm.get('img')?.touched }"
+      id="floatingPassword"
+      formControlName="Image"
+      [ngClass]="{ 'is-invalid': categoryForm.get('Image')?.errors?.['required'] && categoryForm.get('img')?.touched }"
         required
       />
       <label for="floatingPassword">Imagen</label>

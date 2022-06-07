@@ -2,6 +2,7 @@
 from typing import List, Optional
 from fastapi import APIRouter, Body, File, Form, Query, Response, UploadFile, status
 from pydantic import Field
+from Models.TransitionTables import modelCategoryProduct
 
 #Project
 from Schemas.schemas import Category, Product

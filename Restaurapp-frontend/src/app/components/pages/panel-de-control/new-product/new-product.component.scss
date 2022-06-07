@@ -13,7 +13,9 @@
         text-align: center;
         color:var(--color-primary);
     }
-
+    div{
+        margin-bottom: 5px;
+    }
 }
 
 .btn-container{
@@ -56,3 +58,35 @@ a.disabled {
         border-radius: 5px;
     }
  }
+
+ .tagcontainer{
+    display: flex;
+    flex-direction: column;
+    ng-select.custom{
+        width: 100%;
+        border-radius: 5px;
+
+    }
+    label{
+        text-align: center;
+        font-size: 1.2rem;
+        color: white;
+        padding: 5px;
+        background-color: var(--color-primary);
+        border-radius: 5px;
+    }
+ }
+
+ .ng-select.custom ::ng-deep .ng-select-container  {            
+    min-height: 0px;
+    border-radius: 5px;
+    width: 100%;
+    .ng-value-container{
+        .ng-value{
+            background-color: var(--queen-blue);
+            color: white;
+            border-radius: 10%;
+
+        }
+    }
+}
