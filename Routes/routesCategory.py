@@ -5,7 +5,7 @@ from pydantic import Field
 from Models.TransitionTables import modelCategoryProduct
 
 #Project
-from Schemas.schemas import Category, Product
+from Schemas.schemas import Category, Product, ProductForCategory
 from Config.db import engine
 from Models.ModelCategory import modelCategory
 from UsefulFunctions import GetColumn, Innerjoin, copiarImagen, deleteData, showAllData, uploadData
@@ -105,7 +105,7 @@ async def showCategories():
     path = '/products/',
     status_code = status.HTTP_200_OK,
     tags = ['client_views'],
-    response_model=List[Product]
+    response_model=List[ProductForCategory]
 )
 def showProductsByCategory(
     category: int = Query(..., gt = 0, example = 0),

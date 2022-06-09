@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Category } from '@app/shared/interfaces/category.interface';
 import { CategoryService } from '@app/shared/services/category.service';
 import { ProductService } from '@app/shared/services/product.service';
@@ -13,7 +12,10 @@ import { ProductService } from '@app/shared/services/product.service';
 })
 export class NewProductComponent implements OnInit {
 
-  constructor(private productSvc:ProductService ,private fb: FormBuilder, private router:Router, private categorySvc: CategoryService) { }
+  constructor(
+    private productSvc : ProductService,
+    private fb : FormBuilder,
+      private categorySvc : CategoryService) { }
 
   items : String[] = [];
 

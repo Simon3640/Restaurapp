@@ -1,0 +1,57 @@
+.Seleccion{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.product-container {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    .card{
+        width: 90%;
+        max-width: 529px;
+        margin: auto;
+    }
+    .bottomProduct{
+        width: 50%;
+        margin: 10px;
+        .btn{
+            width:50%;
+        }
+    }
+}
+
+.formIngredients{
+    display: flex;
+    flex-direction: column;
+    input[type=checkbox]{
+        display:none;
+    }
+    label{
+        cursor: pointer;
+    
+    }
+    label:before{
+        content:'';
+        background: transparent;
+        border: 2px solid var(--color-primary);
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 3px;
+        height: 10px;
+        text-align: center;
+        vertical-align: middle;
+        width: 10px;
+    }
+    input[type=checkbox]:checked + label:before{
+        background-color: #dc3545;
+        padding: 5px;
+    }
+    input[type=checkbox]:checked + label{
+        color: #dc3545;
+        text-decoration: line-through;
+    }
+}

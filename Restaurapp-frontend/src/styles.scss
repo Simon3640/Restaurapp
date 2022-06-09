@@ -22,10 +22,6 @@
     background-color: rgb(255, 255, 255);
     max-width: 529px;
     transition: all 0.2s ease-in-out;
-    &:hover{
-        box-shadow: 0 5px 5px 0 rgba(255, 0, 0, 0.27), 0 6px 6px 0 rgba(255, 0, 0, 0.4);
-        cursor: pointer;
-    }
     img{
         opacity: 1;
         width: 100%;

@@ -225,7 +225,6 @@ async def showProduct(product_id: int):
         informacion del producto con el id seleccionado
     """
     result = await showItemFromTable(tableProduct,product_id)
-    
     return result
 
 

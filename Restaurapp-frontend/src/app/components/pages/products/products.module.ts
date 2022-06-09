@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { ProductDetailsComponent } from '@products/product-details/product-details.component';
 import { ProductsListComponent } from '@products/products-list/products-list.component';
 import { CategoryComponent } from './category/category.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 const myComponents = [ProductDetailsComponent, ProductsListComponent, CategoryComponent];
@@ -11,7 +12,10 @@ const myComponents = [ProductDetailsComponent, ProductsListComponent, CategoryCo
 @NgModule({
   declarations: [...myComponents],
   imports: [
-    CommonModule, RouterModule
+    CommonModule, 
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [...myComponents]
 })

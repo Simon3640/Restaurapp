@@ -1,6 +1,6 @@
 
 <div class="row" *ngIf="product as product">
-    <div class="col-xs-12 col-sm-6 col-md-4 product-container">
+    <div class="product-container">
         <div class="card">
             <div class="image">
                     <img [src]="product?.Image" [alt]="product.Name"
@@ -10,6 +10,18 @@
                 <div class="header">
                 <h2>{{product.Name}}</h2>
                     <small class="text-muted">{{product.Description}}</small>
+                </div>
+                <div class="Seleccion">
+                    <form [formGroup]="form" class="formIngredients" (ngSubmit)="submitForm()">
+                        <div *ngFor="let I of product.Ingredients; let i=index">
+                            <input type="checkbox" [id]="i" [value]="I" (change)="onCheckboxChange($event)">
+                            <label [for]="i">
+                                {{I}}
+                            </label>
+                        </div>
+                        
+                        <input type="submit" value="Submit">
+                    </form>
                 </div>
             </div>
         </div>
