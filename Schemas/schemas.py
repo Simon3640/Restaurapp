@@ -1,5 +1,6 @@
+from doctest import Example
 from typing import Optional, List
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, Json
 
 
 class Product(BaseModel):
@@ -38,13 +39,22 @@ class Product(BaseModel):
     Image_Galery: Optional[str] = Field(
         example = "image/defaultimage.jpg"
     )
+    Ingredients : Optional[List[str]] = Field(
+        example = ['Tocineta', 'Carne de res', 'Queso americano', 'Lechuga romana']
+    )
 
-    Ingredients: List[str] = Field( example = 'Tocineta')
 
 class ProductCategory(Product):
     Category: Optional[str] = Field(
         ...,
-        )
+    )
+
+class ProductForCategory(Product):
+    Ingredients : Optional[Json] = Field( example = 'Tocineta')
+
+
+    
+
 
 class Ingredients(BaseModel):
     id : Optional[int]
