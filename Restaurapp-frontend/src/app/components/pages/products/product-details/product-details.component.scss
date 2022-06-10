@@ -4,6 +4,14 @@
     align-items: flex-start;
     justify-content: center;
     margin-top: 20px;
+    h4{
+        margin-bottom: 10px;
+        color: var(--bright-navy-blue);
+        b{
+            color: var(--bleu-de-france);
+            font-weight: bolder;
+        }
+    }
 }
 
 .product-container {
@@ -32,6 +40,7 @@
     }
     label{
         cursor: pointer;
+        transition: 0.5s;
     
     }
     label:before{
@@ -47,11 +56,16 @@
         width: 10px;
     }
     input[type=checkbox]:checked + label:before{
-        background-color: #dc3545;
-        padding: 5px;
+        background-color: #9a0e0e;
+        border: 2px solid white;
     }
     input[type=checkbox]:checked + label{
-        color: #dc3545;
-        text-decoration: line-through;
+        color: white;
+        padding-right: 35px;
+        transition: 0.5s;
+        border-top-right-radius: 20% 50%;
+        border-bottom-right-radius: 20% 50%;
+        background-color: #9a0e0e;
     }
+    
 }

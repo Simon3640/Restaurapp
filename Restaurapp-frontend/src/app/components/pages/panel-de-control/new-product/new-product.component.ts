@@ -15,7 +15,7 @@ export class NewProductComponent implements OnInit {
   constructor(
     private productSvc : ProductService,
     private fb : FormBuilder,
-      private categorySvc : CategoryService) { }
+    private categorySvc : CategoryService) { }
 
   items : String[] = [];
 

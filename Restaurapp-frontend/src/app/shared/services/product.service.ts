@@ -9,23 +9,30 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
+  prefix = 'http://localhost:8000/';
+
   searchProducts(query: string) {
-  const filter = 'http://localhost:8000/products/?category=' + query;
+  const filter = this.prefix + 'products/?category=' + query;
   return this.http.get<Product[]>(filter);
   }
 
   getAllProducts() {
-  return this.http.get<Product[]>('http://localhost:8000/products');
+  return this.http.get<Product[]>(this.prefix + 'products');
   }
   getDetails(id: number) {
-    return this.http.get<Product>(`http://localhost:8000/product/${id}`);
+    return this.http.get<Product>(this.prefix + `product/${id}`);
   }
 
   postProduct(product: any) {
     const prueba :Product = product;
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json')
-    return this.http.post('http://localhost:8000/product/new', prueba, {headers: headers});
+    return this.http.post(this.prefix + 'product/new', prueba, {headers: headers});
   
   }
+
+  deleteProduct(id: number) {
+    return this.http.delete(this.prefix + `product/delete/${id}`);
+  }
+
 }

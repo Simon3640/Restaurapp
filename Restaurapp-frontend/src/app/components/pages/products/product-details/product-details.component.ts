@@ -64,7 +64,12 @@ export class ProductDetailsComponent implements OnInit {
       this.modal.dismissAll('reason');
   }
   
+  async addIngredient(ingredient: Array<string>) {
+    this.product['Ingredients'] = await ingredient;
+  }
+
   add(){
+    this.addIngredient(this.form.value.checkArray);
     console.log(this.product);
     this.close();
   }

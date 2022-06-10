@@ -12,8 +12,11 @@
                     <small class="text-muted">{{product.Description}}</small>
                 </div>
                 <div class="Seleccion">
+                    <h4>
+                        Selecciona los ingredientes que <b>NO</b> quieres
+                    </h4>
                     <form [formGroup]="form" class="formIngredients" (ngSubmit)="submitForm()">
-                        <div *ngFor="let I of product.Ingredients; let i=index">
+                        <div class="ingContainer" *ngFor="let I of product.Ingredients; let i=index">
                             <input type="checkbox" [id]="i" [value]="I" (change)="onCheckboxChange($event)">
                             <label [for]="i">
                                 {{I}}
