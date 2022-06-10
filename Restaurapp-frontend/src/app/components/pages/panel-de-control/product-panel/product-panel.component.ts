@@ -22,5 +22,22 @@ export class ProductPanelComponent implements OnInit {
     });
   }
 
+  delProduct(id: any): void {
+    if (confirm('¿Estás seguro de eliminar este producto?')) {
+    this.productSvc.deleteProduct(id)
+    .subscribe(
+      data => {
+        console.log(data)
+        this.ngOnInit();
+      }),
+      () => {
+        console.log('Error occured');
+      }
+    
+    }
+  }
+  editProduct(id: any): void {
+    console.log(id);
+  }
 
 }
