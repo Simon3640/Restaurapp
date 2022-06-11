@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ProductPanelRoutingModule } from './product-panel-routing.module';
+import { EditProductRoutingModule } from './edit-product-routing.module';
+import { EditProductComponent } from './edit-product.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 
@@ -10,8 +11,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
   ],
   imports: [
     CommonModule,
-    ProductPanelRoutingModule,
-    NgSelectModule
+    EditProductRoutingModule,
   ]
 })
-export class ProductPanelModule { }
+export class EditProductModule { }

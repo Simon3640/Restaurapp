@@ -12,6 +12,7 @@ from sqlalchemy import true
 from Schemas.schemas import Product, ProductCategory
 from Config.db import engine
 from Models.ModelProduct import modelProduct
+
 from UsefulFunctions import GetColumn, InsertINTO, copiarImagen, deleteData, showAllData, showItemFromTable, updateData, uploadData
 
 Route=APIRouter()
@@ -98,6 +99,38 @@ async def deleteProduct(
     await deleteData(tableProduct, product_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
+
+@Route.post(
+    path='/product/update/',
+    status_code=status.HTTP_200_OK,
+    summary='Permite la actualizacion de un producto',
+    tags=['Products']
+)
+async def updateProduct(
+    product_id: int = Query(..., gt = 0, example = 0),
+    dataProduct: ProductCategory = Body(...),
+):
+    """Actualiza un producto de la base de datos
+
+    Args:"""
+    from Models.TransitionTables import modelCategoryProduct
+    dictProduct=dataProduct.dict()
+    Category = dictProduct['Category']
+    print('Categoria:' + Category)
+    if len(Category)!=0:
+        print(dictProduct)
+        indexid = GetColumn('Categoria','Name').index(Category)
+        idCategoria = GetColumn('Categoria','id')[indexid]
+        indexIdTransitionTable = GetColumn('Categoria_producto','id_producto').index(product_id)
+        idTransitionTable = GetColumn('Categoria_producto','id')[indexIdTransitionTable]
+        forTransitionTable = {'id_categoria':idCategoria, 'id_producto':product_id}
+        await updateData(forTransitionTable, modelCategoryProduct.__table__, idTransitionTable)
+    del dictProduct['Category'], dictProduct['id']
+    await updateData(dictProduct, tableProduct, product_id)
+
+    
+
+    return Response(status_code=status.HTTP_200_OK)
 
 
 ##Actualiza las imagenes del producto

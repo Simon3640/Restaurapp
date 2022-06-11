@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '@app/shared/interfaces/product.interface';
 import { ProductService } from '@app/shared/services/product.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditProductComponent } from '../edit-product/edit-product.component';
+import { NewProductModule } from '../new-product/new-product.module';
 
 @Component({
   selector: 'app-product-panel',
@@ -9,7 +12,12 @@ import { ProductService } from '@app/shared/services/product.service';
 })
 export class ProductPanelComponent implements OnInit {
 
-  constructor(private productSvc: ProductService) { }
+  constructor(
+    private productSvc: ProductService,
+    private modal: NgbModal
+    ) { }
+  
+  
   products: Product[] = [];
   ngOnInit(): void {
     this.getDataFromService();
@@ -27,7 +35,6 @@ export class ProductPanelComponent implements OnInit {
     this.productSvc.deleteProduct(id)
     .subscribe(
       data => {
-        console.log(data)
         this.ngOnInit();
       }),
       () => {
@@ -36,8 +43,20 @@ export class ProductPanelComponent implements OnInit {
     
     }
   }
-  editProduct(id: any): void {
-    console.log(id);
+  
+  openNewProduct() {
+    const modalRef = this.modal.open(NewProductModule); 
   }
 
+  openSM(productid: any) {
+    const modalRef = this.modal.open(EditProductComponent);
+    modalRef.componentInstance.id = productid;
+    modalRef.result.then((result) => {
+      if ( result === 'success' ) {
+         this.ngOnInit(); // Refresh Data in table grid
+      }
+    }, (reason) => {
+    });
+
+  }
 }
