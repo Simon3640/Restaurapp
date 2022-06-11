@@ -35,4 +35,12 @@ export class ProductService {
     return this.http.delete(this.prefix + `product/delete/${id}`);
   }
 
+  updateProduct(product: any, id: number) {
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json')
+    return this.http.post(this.prefix + `product/update/?product_id=${id}`,
+    product,
+    {headers: headers});
+  }
+
 }

@@ -36,7 +36,7 @@
         placeholder="Valor"
         formControlName="Value"
         [ngClass]="{ 'is-invalid': isInvalidForm('Value') }"
-        required
+        required 
         />
       </div>
     </div>
@@ -79,8 +79,14 @@
       class="form-control Short_Description" 
       rows="5"
       formControlName="Short_Description"
+      [ngClass]="{ 'is-invalid': productForm.controls['Short_Description'].hasError('maxlength')}"
       ></textarea>
       <label for="floatingPassword">Descripción corta</label>
+    </div>
+    <div class="invalid-feedback" style="display:block">
+      <div class="alert alert-secondary" *ngIf="productForm.controls['Short_Description'].hasError('maxlength')">
+        <p >La descripción corta debe tener un máximo de 100 caracteres</p>
+      </div>
     </div>
     <div class=" div-category">
       <label>Categoría</label>

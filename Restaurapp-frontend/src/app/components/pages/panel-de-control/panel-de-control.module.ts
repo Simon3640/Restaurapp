@@ -8,8 +8,9 @@ import { NewProductComponent } from './new-product/new-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ProductPanelComponent } from './product-panel/product-panel.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
-const myComponents = [NewCategoryComponent, NewProductComponent, ProductPanelComponent]
+const myComponents = [NewCategoryComponent, NewProductComponent, ProductPanelComponent, EditProductComponent]
 
 @NgModule({
   declarations: [

@@ -1,0 +1,126 @@
+<div class="formContainer" *ngIf="product as product">
+    <button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
+    <form class="need-validation container" novalidate [formGroup]="productForm" (submit)="onSubmit()">
+        <h1 class="h3 mb-3 fw-normal">EDITAR PRODUCTO</h1>
+
+        <div class="form-floating">
+            <input class="form-control" id="floatingInput" placeholder="Perros calientes" formControlName="Name"
+                [ngClass]="{ 'is-invalid': isInvalidForm('Name') }" value="kasdkamskdmas" required />
+            <label for="floatingInput">Nombre</label>
+        </div>
+        <div class="invalid-feedback" style="display:block">
+            <div class="alert alert-secondary" *ngIf="productForm.controls['Name'].hasError('minlength')">
+                El nombre debe tener al menos 3 caracteres
+            </div>
+            <div class="alert alert-secondary" *ngIf="productForm.controls['Name'].hasError('maxlength')">
+                El nombre debe tener menos de 255 caracteres
+            </div>
+        </div>
+        <div class="alert alert-secondary" *ngIf="isInvalidForm('Name')">
+            <p>El nombre es requerido</p>
+        </div>
+
+        <div class="form-floating">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" style="background-color:var(--color-primary); color:white;">$</span>
+                </div>
+                <input type="number" class="form-control" id="floatingPassword" placeholder="Valor"
+                    formControlName="Value" [ngClass]="{ 'is-invalid': isInvalidForm('Value') }" required />
+            </div>
+        </div>
+        <div class="invalid-feedback" style="display:block">
+            <div class="alert alert-secondary" *ngIf="productForm.controls['Value'].hasError('min')">
+                <p>El valor debe superar el minimo de 0 </p>
+            </div>
+            <div class="alert alert-secondary" *ngIf="productForm.controls['Value'].hasError('max')">
+                <p>El valor no debe superar 100000000000 por seguridad</p>
+            </div>
+            <div class="alert alert-info"
+                *ngIf="!Entero(productForm.get('Value')?.value) && productForm.get('Value')?.dirty">
+                <p>Recuerda usar . unicamente para decimales, por ejemplo poner 20000 para 20 mil, esto para que las
+                    estadísticas funcionen correctamente</p>
+            </div>
+        </div>
+        <div class="form-floating">
+            <textarea type="text" class="form-control Description" id="floatingPassword" formControlName="Description"
+                [ngClass]="{ 'is-invalid': productForm.get('Description')?.errors?.['required'] && productForm.get('Description')?.touched }"
+                required></textarea>
+            <label for="floatingPassword">Descripción</label>
+        </div>
+        <div class="invalid-feedback" style="display:block">
+            <div class="alert alert-secondary" *ngIf="isInvalidForm('Description')">
+                <p>La descripción es requerida</p>
+            </div>
+            <div class="alert alert-secondary" *ngIf="productForm.controls['Description'].hasError('minlength')">
+                <p>La descripción debe tener menos de 20 caracteres</p>
+            </div>
+            <div class="alert alert-secondary" *ngIf="productForm.controls['Description'].hasError('maxlength')">
+                <p>La descripción debe tener menos de 300 caracteres</p>
+            </div>
+        </div>
+        <div class="form-floating">
+            <textarea type="text" class="form-control Short_Description" rows="5"
+                formControlName="Short_Description"></textarea>
+            <label for="floatingPassword">Descripción corta</label>
+        </div>
+        
+
+        <div class="form-floating">
+            <input class="form-control" id="floatingInput" formControlName="Image"
+                [ngClass]="{ 'is-invalid': isInvalidForm('Image') }" required />
+            <label for="floatingInput">Imagen</label>
+        </div>
+        <div class="alert alert-secondary" *ngIf="isInvalidForm('Image')">
+            <p>La imagen es requerido</p>
+        </div>
+        <div class="tagcontainer">
+            <label>Ingredientes</label>
+            <ng-select class="custom" [items]="items" [addTag]="true" placeholder="Tocineta" [multiple]="true"
+                [selectOnTab]="true" [isOpen]="false" formControlName="Ingredients">
+
+            </ng-select>
+            <div class="alert alert-info"
+                *ngIf="productForm.get('Ingredients')?.touched && productForm.get('Ingredients')?.value.length == 0 ">
+                <span>Agregar ingredientes opcionales a
+                    tu producto hará que los clientes puedan
+                    decidir al momento de pedir si quieren o no
+                    alguno de los ingredientes opcionales, <b>esta opción no es obligatoria.</b></span>
+            </div>
+            <div class="col">
+                <small style="margin: 10px;">Cambiar de categoría</small>
+                <button 
+                class="btn btn-outline-success btn-sm" 
+                style="margin: 10px;" 
+                type="button" 
+                *ngIf="!hideCategory"
+                (click)="hideCategory=!hideCategory"
+                >+</button>
+                <button 
+                class="btn btn-outline-danger btn-sm" 
+                style="margin: 10px;" 
+                type="button" 
+                *ngIf="hideCategory"
+                (click)="hideCategory=!hideCategory"
+                >-</button>
+            </div>
+            
+            <div class=" div-category "  style="transition: 0.5s;" *ngIf="hideCategory">
+                <label>Categoría</label>
+                <select class="selectpicker" datalive-search="true" formControlName="Category">
+                    <option *ngFor="let category of categories" [value]="category.Name">{{category.Name}}</option>
+                </select>
+            </div>
+            <div class="alert alert-secondary" *ngIf="isInvalidForm('Category')">
+                <p>Debes seleccionar una categoría</p>
+            </div>
+
+        </div>
+        <div class="btn-container">
+            <button class="btn btn-danger" type="button" (click)="onClose()">Cancelar</button>
+            <button class=" btn btn-dark btn-primary btn-circle" type="submit" [disabled]="productForm.invalid"> →
+            </button>
+        </div>
+
+     </form>
+</div>
