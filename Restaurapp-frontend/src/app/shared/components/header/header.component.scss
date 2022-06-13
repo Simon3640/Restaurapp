@@ -1,0 +1,19 @@
+.cart{
+    display: flex;
+    flex-direction: row;
+    font-size: 2rem;
+    p{
+        color:white;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        background-color: rgb(34, 186, 34);
+        border-radius: 50%;
+        font-size: 0.8rem;
+    }
+}
+
+.cart :hover
+{
+    cursor: pointer;
+}

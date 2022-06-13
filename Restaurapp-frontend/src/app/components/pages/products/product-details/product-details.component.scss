@@ -14,8 +14,13 @@
     }
 }
 
+.row{
+    width: 100%;
+    margin: auto;
+}
 .product-container {
     display: flex;
+    width: 100%;
     flex-direction: column;
     padding: 5px;
     .card{
@@ -24,10 +29,21 @@
         margin: auto;
     }
     .bottomProduct{
-        width: 50%;
-        margin: 10px;
+        width: 90%;
+        max-width: 529px;
+        margin: 5px auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
         .btn{
-            width:50%;
+            width:30%;
+        }
+        p{
+            width: 30%;
+            margin-right: 10px;
+            color: green;
+            margin: auto;
+            font-weight: 700;
         }
     }
 }

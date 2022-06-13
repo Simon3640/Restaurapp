@@ -22,13 +22,12 @@
                                 {{I}}
                             </label>
                         </div>
-                        
-                        <input type="submit" value="Submit">
                     </form>
                 </div>
             </div>
         </div>
         <div class="bottomProduct" >
+            <p>{{product.Value | currency : 'COP' : 'symbol' : '1.0-0'}}</p>
             <button class="btn btn-danger" (click)="close()"> close </button>
             <button class="btn btn-success" (click)="add()">Añadir</button>
         </div>
