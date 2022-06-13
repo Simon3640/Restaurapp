@@ -33,12 +33,6 @@ export class ProductsListComponent implements OnInit {
   }
 
 
-  // private getDataFromService(): void {
-  //   this.productSvc.searchProducts(this.query).subscribe((res:any) => {
-  //     const results = res;
-  //     this.products$ = results
-  //   });
-  // }
   openSM(productid: any) {
     const modalRef = this.modal.open(ProductDetailsComponent);
     modalRef.componentInstance.id = productid;

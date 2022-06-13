@@ -5,6 +5,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CookieService } from 'ngx-cookie-service';
+import { ProductToCartService } from '@app/shared/services/Connections/product-to-cart.service';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -21,7 +23,9 @@ export class ProductDetailsComponent implements OnInit {
     private route:ActivatedRoute,
     private productSvc:ProductService,
     private modal: NgbModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cookieSvc:CookieService,
+    private productToCart : ProductToCartService,
   ) { 
     this.form = this.fb.group({
       checkArray: this.fb.array([]),
@@ -41,7 +45,6 @@ export class ProductDetailsComponent implements OnInit {
         this.product = result;
       }
     )
-  
   }
 
   onCheckboxChange(e: any) {
@@ -69,8 +72,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   add(){
-    this.addIngredient(this.form.value.checkArray);
-    console.log(this.product);
-    this.close();
-  }
+      this.productToCart.addProduct(this.product);
+      this.modal.dismissAll('reason');
+}
+
 }

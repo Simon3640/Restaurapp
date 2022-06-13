@@ -53,7 +53,7 @@ export class ProductPanelComponent implements OnInit {
     modalRef.componentInstance.id = productid;
     modalRef.result.then((result) => {
       if ( result === 'success' ) {
-         this.ngOnInit(); // Refresh Data in table grid
+         this.ngOnInit();
       }
     }, (reason) => {
     });
