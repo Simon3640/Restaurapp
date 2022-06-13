@@ -1,0 +1,24 @@
+<div class="cartContainer">
+    <button type="button" class="btn-close" style="height:40px;" aria-label="Close" (click)="onClose()"></button>
+    <div class="productSummary">
+        <div *ngFor="let product of products; let i=index" class="productInfo">
+            <div class="productImage">
+                <img [src]="product.Image" [alt]="product.Name">
+            </div>
+            <div class="information">
+                <div class="productName">{{product.Name}}</div>
+                <div class="productPrice"><p>Valor: <b>{{product.Value}}</b></p></div>
+            </div>
+            <div class="removeItem">
+                <button type="button" class="btn btn-danger btn-sm btn-remove" (click)="removeProduct(i)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="confirmation">
+        <small>Total:</small>
+        <button class="btn btn-outline-success" (click)="onConfirm()">Confirmar pedido</button>
+    </div>
+</div>
