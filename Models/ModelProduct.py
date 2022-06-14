@@ -16,7 +16,7 @@ class modelProduct(Base):
     Short_Description = Column(String(100), nullable=False)
     Value = Column(Integer, nullable=False)
     Image = Column(String(1000), nullable=False)
-    Image_Galery = Column(String(3000), nullable=True, )
+    Image_Galery = Column(JSON, nullable=True, default=None)
     Ingredients = Column(JSON, nullable=True, default='Image/defaultimage.jpg')
 
     def __init__(self, Name, Description, Short_Description, Value,Ingredients, Image, Image_Galery):

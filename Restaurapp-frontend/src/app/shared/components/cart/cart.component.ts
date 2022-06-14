@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from '@app/shared/interfaces/product.interface';
 import { ProductToCartService } from '@app/shared/services/Connections/product-to-cart.service';
 import { ProductService } from '@app/shared/services/product.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,7 +15,10 @@ export class CartComponent implements OnInit {
   messageReceived: string = '';
   private sub$!: Subscription;
   ventaInfo : any = [];
-  products : any[] = [];
+  products : Product[] = [];
+  total: number = 0;
+  edit = Array(this.products.length).fill(false);
+  public isCollapsed = false;
 
   constructor(
     private cookieSvc: CookieService,
@@ -22,27 +26,13 @@ export class CartComponent implements OnInit {
     private productSvc : ProductService,
     private modal: NgbActiveModal,
   ) {
-    // this.subscriptionName = this.productToCart.getUpdate().subscribe
-    // (message => {
-    //   this.messageReceived = message;
-    //   this.ngOnInit();
-    // })
    }
 
   ngOnInit(): void {
-    // if (this.cookieSvc.get('cart')) {
-    //   this.ventaInfo = JSON.parse(this.cookieSvc.get('cart'));
-    //   for (let i = 0; i < this.ventaInfo.length; i++) {
-    //     this.productSvc.getDetails(this.ventaInfo[i].id).subscribe(
-    //       (res:any) => { 
-    //         const result = res;
-    //         this.products.push(result);
-    //       });
-    //     }
-    // }
       this.sub$ = this.productToCart.myCart$
       .subscribe(data => {
       this.products = data;
+      this.total = this.productToCart.getTotal();
       })
   }
 
@@ -61,9 +51,13 @@ export class CartComponent implements OnInit {
 
   onClose() {
     this.modal.close('closed');
+    console.log(this.cookieSvc.get('cart'));
   }
 
   ngOnDestroy() {
     this.sub$.unsubscribe();
+  }
+  toggleEdit(index: number) {
+    this.edit[index]= !this.edit[index];
   }
 }

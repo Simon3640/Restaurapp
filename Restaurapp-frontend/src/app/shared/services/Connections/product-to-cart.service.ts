@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Product, ProductDTO } from '@app/shared/interfaces/product.interface';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, reduce } from 'rxjs';
 import { ProductService } from '../product.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductToCartService {
-  private Cart : any[] = [];
+  private Cart : ProductDTO[] = [];
   private myCart = new BehaviorSubject<any[]>([]);
   public myCart$ = this.myCart.asObservable();
   
@@ -26,12 +27,20 @@ export class ProductToCartService {
         this.productSvc.getDetails(psProduct[i].id).subscribe(
           (res:any) => { 
             const result = res;
+            result.Ingredients = psProduct[i].ingredients;
             this.Cart.push(result);
             this.myCart.next(this.Cart);
           });
       }
     }
   }
+
+  getTotal() {
+    return this.Cart.reduce((acc, cur) => {
+      return acc + cur.Value;
+    },0);
+  }
+    
   
   addProduct(product: any) {
     this.Cart.push(product);
@@ -41,7 +50,7 @@ export class ProductToCartService {
     }
     const psProducts = [];
     for(let product of this.Cart){
-      psProducts.push({id: product.id, ingredients: product.ingredients});
+      psProducts.push({id: product.id, ingredients: product.Ingredients});
     }
     this.cookieSvc.set('cart', JSON.stringify(psProducts));
   }
@@ -54,7 +63,7 @@ export class ProductToCartService {
     }
     const psProducts = [];
     for(let product of this.Cart){
-      psProducts.push({id: product.id, ingredients: product.ingredients});
+      psProducts.push({id: product.id, ingredients: product.Ingredients});
     }
     this.Cart.length === 0 ? this.cookieSvc.delete('cart') : 
     this.cookieSvc.set('cart', JSON.stringify(psProducts));

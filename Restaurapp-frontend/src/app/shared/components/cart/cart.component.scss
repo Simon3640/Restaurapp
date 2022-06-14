@@ -1,41 +1,106 @@
-.cartContainer{
+.cartContainer {
     height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    div{
+
+    div {
         width: 100%;
     }
-    .productSummary{
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        height: 50px;
+        background-color: #fff;
+        border-bottom: 1px solid #e6e6e6;
+
+        h3 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    }
+
+    .productSummary {
         padding: 10px;
         height: 90%;
         display: flex;
         flex-direction: column;
         align-items: center;
         overflow-y: auto;
-        .productInfo{
+        overflow-x: hidden;
+
+        .productBlock {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            width: 100%;
+            height: auto;
+            margin: 10px;
+
+            .card{
+                margin: 0;
+            }
+
+            .viewDetails {
+                width: 160px;
+                height: auto;
+                color: white;
+                font-size: 0.8rem;
+                background-color: var(--bleu-de-france);
+                text-align: center;
+                clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+                border-radius: 5px solid black;
+                transition: all 0.4s ease;
+                i{
+                    transition: all 0.4s ease;
+                }
+            }
+            
+            .viewDetails.focus {
+                transition: all 0.5s ease;
+                i{
+                    transform: rotateZ(180deg);
+                }
+                
+            }
+            .hidden{
+                display: none;
+                transition: all 0.4s ease-in-out;
+            }
+        }
+
+        .productInfo {
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            height: 90px;
-            margin: 10px;
-            div{
+
+            div {
                 margin-right: 10px;
             }
-            // border: 1px solid black;
-            box-shadow: 1px 1px 1px 1px #000000;
-            .productImage{
+
+            border: 1px solid var(--bleu-de-france);
+            // box-shadow: 1px 1px 1px 1px #000000;
+
+            .productImage {
                 width: 40%;
                 height: 90%;
 
-                img{
+                img {
                     height: 100%;
+                    padding-left:10px;
                     width: 100%;
                     object-fit: cover;
                 }
             }
-            .information{
+
+            .information {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -43,34 +108,46 @@
                 height: auto;
                 width: 50%;
                 padding-left: 10px;
-                .productName{
+
+                .productName {
                     font-size: 0.8rem;
                     color: var(--bleu-de-france);
                     font-weight: bold;
                 }
-                .productPrice{
+
+                .productPrice {
                     font-size: 0.8rem;
                     font-weight: bold;
                 }
             }
-            .removeItem{
+
+            .removeItem {
                 width: 10%;
                 height: auto;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                button{
+
+                button {
                     padding: auto;
                 }
             }
         }
     }
-    .confirmation{
+
+    .confirmation {
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding:5px 10px;
+        padding: 5px 10px;
         justify-content: space-between;
         height: 10%;
+        border-top: 1px solid #e6e6e6;
+
+        small {
+            font-size: 0.8rem;
+            color: var(--bleu-de-france);
+            font-weight: bold;
+        }
     }
 }

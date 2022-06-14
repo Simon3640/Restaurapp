@@ -15,7 +15,7 @@ import { ProductToCartService } from '@app/shared/services/Connections/product-t
 export class ProductDetailsComponent implements OnInit {
 
   product: any;
-  ing : String[] = [];
+  ing : string[] = [];
   form : FormGroup;
   @Input() id: number=0;
 
@@ -67,11 +67,12 @@ export class ProductDetailsComponent implements OnInit {
       this.modal.dismissAll('reason');
   }
   
-  async addIngredient(ingredient: Array<string>) {
-    this.product['Ingredients'] = await ingredient;
+  addIngredient(ingredient: Array<string>) {
+    this.product['Ingredients'] = ingredient;
   }
 
   add(){
+      this.addIngredient(this.form.get('checkArray')?.value);
       this.productToCart.addProduct(this.product);
       this.modal.dismissAll('reason');
 }

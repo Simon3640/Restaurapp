@@ -13,11 +13,11 @@ export class CategoryService {
     return this.http.get<Category[]>('http://localhost:8000/categories');
   }
 
-  postCategory(category: any) {
+  postCategory(category: Category) {
     const prueba :Category = category;
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json')
-    return this.http.post('http://localhost:8000/category/new', prueba, {headers: headers});
+    return this.http.post<Category>('http://localhost:8000/category/new', prueba, {headers: headers});
   }
 
 
