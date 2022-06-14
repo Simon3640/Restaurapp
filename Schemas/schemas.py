@@ -3,6 +3,8 @@ from typing import Optional, List
 from pydantic import BaseModel, Field, Json
 
 
+#TODO: Producto
+
 class Product(BaseModel):
     id: Optional[int]
 
@@ -36,9 +38,11 @@ class Product(BaseModel):
         example = "image/defaultimage.jpg"
     )
 
-    Image_Galery: Optional[str] = Field(
+    Image_Galery: Optional[List[str]] = Field(
         example = "image/defaultimage.jpg"
     )
+
+
     Ingredients : Optional[List[str]] = Field(
         example = ['Tocineta', 'Carne de res', 'Queso americano', 'Lechuga romana']
     )
@@ -50,21 +54,12 @@ class ProductCategory(Product):
     )
 
 class ProductForCategory(Product):
+    Image_Galery: Optional[Json] = Field( example = 'image/defaultimage.jpg')
     Ingredients : Optional[Json] = Field( example = 'Tocineta')
 
 
-    
+#TODO: Categoria
 
-
-class Ingredients(BaseModel):
-    id : Optional[int]
-
-    Name: str = Field(
-        ...,
-        min_length = 1,
-        max_length = 45,
-        example = "Cebolla"
-    )
 
 class Category(BaseModel):
 
@@ -78,6 +73,9 @@ class Category(BaseModel):
     )
     Image:str = Field(
         min_length=1)
+
+
+#TODO: Adiciones
 
 class Add(BaseModel):
     id: Optional[int]

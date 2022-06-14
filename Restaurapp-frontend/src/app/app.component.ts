@@ -1,5 +1,4 @@
-import { Component, HostListener } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CartComponent } from './shared/components/cart/cart.component';
 import { Subscription } from 'rxjs';
@@ -18,7 +17,6 @@ export class AppComponent {
   total = 0;
   private sub$!: Subscription;
   constructor(
-    private cookieSvc: CookieService,
     private modal : NgbModal,
     private productToCart : ProductToCartService
     ) { 
@@ -28,12 +26,11 @@ export class AppComponent {
     this.productToCart.getFromCookie();
     this.productToCart.myCart$
     .subscribe(data => {
-      this.total = data.reduce((acc, cur) => {
-        return acc + cur.Value;
-      },0);
+      this.total = this.productToCart.getTotal();
       this.nProducts = data.length;
       this.productInCart = data.length > 0 ? true : false;
     })
+    
   }
   
   open(){

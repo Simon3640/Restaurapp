@@ -1,24 +1,43 @@
 <div class="cartContainer">
-    <button type="button" class="btn-close" style="height:40px;" aria-label="Close" (click)="onClose()"></button>
+    <div class="header">
+        <h3> TU PEDIDO </h3>
+        <button type="button" class="btn-close" style="height:40px;" aria-label="Close" (click)="onClose()"></button>
+    </div>
+
     <div class="productSummary">
-        <div *ngFor="let product of products; let i=index" class="productInfo">
-            <div class="productImage">
-                <img [src]="product.Image" [alt]="product.Name">
+        <div *ngFor="let product of products; let i=index" class="productBlock">
+            <div class="productInfo card" >
+                <div class="productImage">
+                    <img [src]="product.Image" [alt]="product.Name">
+                </div>
+                <div class="information">
+                    <div class="productName">{{product.Name}}</div>
+                    <div class="productPrice">
+                        <p>Valor: <b>{{product.Value}}</b></p>
+                    </div>
+                </div>
+                <div class="removeItem">
+                    <button type="button" class="btn btn-danger btn-sm btn-remove" (click)="removeProduct(i)">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
-            <div class="information">
-                <div class="productName">{{product.Name}}</div>
-                <div class="productPrice"><p>Valor: <b>{{product.Value}}</b></p></div>
+
+            <div [ngbCollapse]="!edit[i]" [id]="i" class="card">
+                <p>{{product.Ingredients}}</p>
             </div>
-            <div class="removeItem">
-                <button type="button" class="btn btn-danger btn-sm btn-remove" (click)="removeProduct(i)">
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </button>
-            </div>
+
+            <button class="btn btn-primary viewDetails" type="button" (click)="toggleEdit(i)"
+                [attr.aria-expanded]="edit[i]" [attr.aria-controls]="i" [ngClass]="{'focus':edit[i]}">
+                Editar producto
+                <i class="fa fa-solid fa-angle-down"></i>
+            </button>
+            
         </div>
     </div>
-    
+
     <div class="confirmation">
-        <small>Total:</small>
+        <small>Total: {{total | currency : 'COP' : 'symbol' : '1.0-0'}}</small>
         <button class="btn btn-outline-success" (click)="onConfirm()">Confirmar pedido</button>
     </div>
 </div>

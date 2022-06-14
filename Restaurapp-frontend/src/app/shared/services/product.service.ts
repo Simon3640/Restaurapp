@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Product } from '@shared/interfaces/product.interface';
+import { Product, ProductDTO } from '@shared/interfaces/product.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +23,11 @@ export class ProductService {
     return this.http.get<Product>(this.prefix + `product/${id}`);
   }
 
-  postProduct(product: any) {
+  postProduct(product: ProductDTO) {
     const prueba :Product = product;
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json')
-    return this.http.post(this.prefix + 'product/new', prueba, {headers: headers});
+    return this.http.post<ProductDTO>(this.prefix + 'product/new', prueba, {headers: headers});
   
   }
 
@@ -35,10 +35,10 @@ export class ProductService {
     return this.http.delete(this.prefix + `product/delete/${id}`);
   }
 
-  updateProduct(product: any, id: number) {
+  updateProduct(product: ProductDTO, id: number) {
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json')
-    return this.http.post(this.prefix + `product/update/?product_id=${id}`,
+    return this.http.post<Product>(this.prefix + `product/update/?product_id=${id}`,
     product,
     {headers: headers});
   }

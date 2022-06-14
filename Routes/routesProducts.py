@@ -117,6 +117,7 @@ async def updateProduct(
     dictProduct=dataProduct.dict()
     Category = dictProduct['Category']
     print('Categoria:' + Category)
+
     if len(Category)!=0:
         print(dictProduct)
         indexid = GetColumn('Categoria','Name').index(Category)
@@ -126,9 +127,8 @@ async def updateProduct(
         forTransitionTable = {'id_categoria':idCategoria, 'id_producto':product_id}
         await updateData(forTransitionTable, modelCategoryProduct.__table__, idTransitionTable)
     del dictProduct['Category'], dictProduct['id']
-    await updateData(dictProduct, tableProduct, product_id)
-
     
+    await updateData(dictProduct, tableProduct, product_id)
 
     return Response(status_code=status.HTTP_200_OK)
 
@@ -183,41 +183,6 @@ async def updateImages(
         await copiarImagen(file_name,imG)
     
     return Response(status_code = status.HTTP_200_OK)
-
-##Actualiza la informacion de un producto
-
-# @Route.put(
-#     path = '/product/update/{product_id}',
-#     status_code = status.HTTP_200_OK,
-#     summary = 'actualiza la informacion de un prodcuto',
-#     tags = ['Products'],
-#     deprecated=True
-# )
-# async def updateProduct(
-#     product_id: int,
-#     dataProduct: Optional[Product] = Body(default=None),
-#     # Category : Optional[str] = Query(default=None, enum=GetColumn('Categoria', 'Name')),
-
-# ):
-#     """Este path operation realiza una actualizacion en la base de datos del producto
-
-#     Args:
-
-#         dataProduct (Product): informacion actualizada del producto
-#         product_id (int): id del producto objetivo
-
-#     Returns:
-
-#         actualiza la base de datos y devuelve un response HTTP 200
-#     """
-#     if Category:
-#         indexid = GetColumn('Categoria','Name').index(Category)
-#         idCategoria = GetColumn('Categoria','id')[indexid]
-#         InsertINTO('Categoria_producto',(idCategoria,product_id))
-#     if dataProduct:
-#         upDataProduct=dataProduct.dict()
-#         await updateData(upDataProduct,tableProduct,product_id)
-#     return Response(status_code= status.HTTP_200_OK)
 
 
 
