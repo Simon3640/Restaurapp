@@ -10,7 +10,7 @@ export interface Product {
 }
 
 export interface ProductDTO extends Product, Omit<Product, 'id'> {
-    Category : string;
+    Category : Number;
 }
 
 export interface PseudoProduct {

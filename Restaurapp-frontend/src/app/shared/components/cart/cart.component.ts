@@ -51,7 +51,6 @@ export class CartComponent implements OnInit {
 
   onClose() {
     this.modal.close('closed');
-    console.log(this.cookieSvc.get('cart'));
   }
 
   ngOnDestroy() {

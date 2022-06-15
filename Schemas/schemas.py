@@ -49,7 +49,7 @@ class Product(BaseModel):
 
 
 class ProductCategory(Product):
-    Category: Optional[str] = Field(
+    Category: Optional[int] = Field(
         ...,
     )
 

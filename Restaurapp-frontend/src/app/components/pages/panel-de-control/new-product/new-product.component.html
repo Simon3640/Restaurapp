@@ -94,7 +94,7 @@
       datalive-search="true"
       formControlName="Category"
       >
-        <option *ngFor="let category of categories" [value]="category.Name">{{category.Name}}</option>
+        <option *ngFor="let category of categories" [value]="category.id">{{category.Name}}</option>
       </select>
     </div>
     <div class="alert alert-secondary" *ngIf="isInvalidForm('Category')">
