@@ -45,6 +45,7 @@ export class CartComponent implements OnInit {
 
   onConfirm() {
     console.log(this.products);
+    this.productToCart.removeAll();
     this.modal.close('confirm');
 
   }

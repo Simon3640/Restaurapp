@@ -43,6 +43,7 @@ const routes: Routes = [
    { path: 'edit-product/:id', loadChildren: () =>
    import('./components/pages/panel-de-control/edit-product/edit-product.module').then(m => m.EditProductModule) 
   },
+  { path: 'order-control', loadChildren: () => import('./components/pages/panel-de-control/order-control/order-control.module').then(m => m.OrderControlModule) },
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

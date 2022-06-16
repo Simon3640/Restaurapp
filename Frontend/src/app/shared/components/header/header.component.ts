@@ -11,7 +11,9 @@ export class HeaderComponent implements OnInit {
   @Output() clickCart : EventEmitter<string> = new EventEmitter<string>();
   
   clickCartEvent() {
-    this.clickCart.emit('cart');
+    if (this.Nproducts > 0) {
+      this.clickCart.emit('cart');
+    }
   }
 
 
