@@ -69,5 +69,13 @@ export class ProductToCartService {
     this.cookieSvc.set('cart', JSON.stringify(psProducts));
   }
 
+  removeAll(){
+    this.Cart = [];
+    this.myCart.next(this.Cart);
+    if (this.cookieSvc.check('cart')) {
+      this.cookieSvc.delete('cart');
+    }
+  }
+
 }
 

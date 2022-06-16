@@ -9,8 +9,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ProductPanelComponent } from './product-panel/product-panel.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { OrderControlComponent } from './order-control/order-control.component';
 
-const myComponents = [NewCategoryComponent, NewProductComponent, ProductPanelComponent, EditProductComponent]
+const myComponents = [NewCategoryComponent, NewProductComponent, ProductPanelComponent, EditProductComponent, OrderControlComponent]
 
 @NgModule({
   declarations: [

@@ -24,7 +24,7 @@ export class NewProductComponent implements OnInit {
     Description: ['',[Validators.required, Validators.minLength(20), Validators.maxLength(300)]],
     Short_Description: ['',[ Validators.minLength(0), Validators.maxLength(100)]],
     Value: [Number, [Validators.required, Validators.min(0), Validators.max(100000000000)]],
-    Category: ['',[Validators.required]],
+    Category: [Number,[Validators.required]],
     Image: ['',[Validators.required]],
     Ingredients: [this.items],
   });
@@ -40,8 +40,7 @@ export class NewProductComponent implements OnInit {
     return this.productForm.controls[controlName].invalid && this.productForm.controls[controlName].touched;}
   
   onSubmit() {
-    console.log(this.productForm.value);
-    this.productSvc.postProduct(this.productForm.value).subscribe(data => console.log(data));
+    this.productSvc.postProduct(this.productForm.value).subscribe();
   }
 
   categories: Category[] = [];

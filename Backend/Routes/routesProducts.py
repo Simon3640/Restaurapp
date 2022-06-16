@@ -58,11 +58,8 @@ async def createProduct(
         
     """
     dictProduct=dataProduct.dict()
-    Category = dictProduct['Category']
+    idCategoria = dictProduct['Category']
     del dictProduct['Category']
-    
-    indexid = GetColumn('Categoria','Name').index(Category)
-    idCategoria = GetColumn('Categoria','id')[indexid]
     
 
     await uploadData(dictProduct,tableProduct)

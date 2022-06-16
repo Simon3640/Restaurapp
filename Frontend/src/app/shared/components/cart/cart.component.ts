@@ -45,13 +45,13 @@ export class CartComponent implements OnInit {
 
   onConfirm() {
     console.log(this.products);
+    this.productToCart.removeAll();
     this.modal.close('confirm');
 
   }
 
   onClose() {
     this.modal.close('closed');
-    console.log(this.cookieSvc.get('cart'));
   }
 
   ngOnDestroy() {
