@@ -4,9 +4,78 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
     p {
         margin: 0;
-        color:green;
+        color: green;
         font-weight: 700;
     }
+    .btns{
+        width:50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .btn-light{
+            width:30%;
+            background-color: transparent;
+            padding: 0;
+            img{
+                height: 100%;
+                margin: auto;
+            }
+        }
+        .btn-success{
+            width:70%;
+        }
+    }
 }
+
+.card {
+    .image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .card-inner {
+        width: 100%;
+        height: 110px;
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            h2 {
+                font-size: 1.3em;
+                font-weight: bold;
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width:766px) and (min-width: 576px) {
+    .card {
+        .card-inner {
+            height: 160px;
+        }
+
+    }
+}
+
+@media screen and (min-width:992px) {
+    .card {
+        .card-inner {
+            height: 160px;
+        }
+
+    }
+}
+    

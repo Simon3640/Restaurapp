@@ -1,5 +1,5 @@
 <div class="row" *ngIf="products$ | async as products">
-    <div class="col-xs-12 col-sm-6 col-md-4 product-container" *ngFor="let product of products">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 product-container" *ngFor="let product of products">
         <div class="card">
             <div class="image">
                 <a (click)="openSM(product.id)">
@@ -16,7 +16,12 @@
         </div>
         <div class="bottomProduct" >
             <p>{{+product.Value | currency : 'COP' : 'symbol' : '1.0-0'}}</p>
-            <button class="btn btn-success" (click)="openSM(product.id)">Agregar a la orden</button>
+            <div class="btns">
+                <button class="btn btn-small btn-light" (click)="verde()"><img src="https://digiseguridad.com.co/wp-content/uploads/2022/06/Untitled-3.svg">
+                </button>
+                <button class="btn btn-success btn-circle" (click)="openSM(product.id)"><i class="fa fa-plus-circle"></i></button>
+            </div>
+            
         </div>
     </div>
 </div>

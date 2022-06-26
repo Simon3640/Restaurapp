@@ -1,3 +1,4 @@
+from datetime import datetime
 from doctest import Example
 from typing import Optional, List
 from pydantic import BaseModel, Field, Json
@@ -91,4 +92,52 @@ class Add(BaseModel):
         gt = 0,
         le = 100000000000,
         example = 2000
+    )
+
+
+#TODO: Venta
+
+class Venta(BaseModel):
+    id: Optional[int]
+
+    id_cliente: Optional[int] = Field(
+        ...,
+        gt = 0,
+        le = 100000000000,
+        example = 1
+    )
+
+    Informacion: List[Json] = Field(
+        ...,
+        example = '''[{
+            "Product_id": 1,
+            "Quantity": 1,
+            "Additions": [
+                1,2,3,4
+                ],
+            "Ingredients": [
+                'Tocineta','Carne de res','Queso americano','Lechuga romana'
+                ]
+            },
+            {
+            "Product_id": 2,
+            "Quantity": 2,
+            "Additions": [
+                1,2,3,4
+                ],
+            "Ingredients": [
+                'Tocineta','Carne de res','Queso americano','Lechuga romana'
+                ]
+            }
+        ]'''
+    )
+
+    Fecha: Optional[datetime] = Field(
+        ...,
+        example = "2020-01-01T00:00:00.000Z"
+    )
+
+    Estado: Optional[str] = Field(
+        ...,
+        example = "Pendiente"
     )

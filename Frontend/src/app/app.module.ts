@@ -15,12 +15,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CartComponent } from './shared/components/cart/cart.component';
+import { ThxComponent } from './shared/components/cart/thx/thx.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    CartComponent
+    CartComponent,
+    ThxComponent
   ],
   imports: [
     BrowserModule,

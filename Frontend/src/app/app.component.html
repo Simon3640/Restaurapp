@@ -1,11 +1,11 @@
 <app-header [Nproducts]="nProducts" (clickCart)="open()"> </app-header>
-<div class="container" style="margin-bottom: 9vh;">
+<div class="container" style="margin-bottom: 9vh; margin-top: 10px;">
   <router-outlet>
     
   </router-outlet>
 </div>
 
-<div class="fixed-bottom cartContainer" [hidden]="!productInCart">
+<div class="fixed-bottom cartContainer animated flash" [hidden]="!productInCart" (click)="open()">
 <small>Total: {{total | currency : 'COP' : 'symbol' : '1.0-0'}}</small>
-<button class="btn btn-outline-success" (click)="open()">Realizar pedido</button>
+<button class="btn btn-outline-success">Realizar pedido</button>
 </div>
