@@ -2,10 +2,8 @@
     justify-content: center;
 }
 .category-container{
-    width:85%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 2fr));
     .card{
+        max-width: 350px;
         box-shadow: none;
         .image{
             width: 100%;
@@ -21,7 +19,8 @@
     }
     .card-inner {
         width: 100%;
-        background-color: rgb(46, 134, 227);
+        background-color: var(--color-primary
+        );
     }
     h2 {
         color: white;

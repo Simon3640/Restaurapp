@@ -9,15 +9,16 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
+  prefix= 'http://localhost:8000/';
   getCategories(){
-    return this.http.get<Category[]>('http://localhost:8000/categories');
+    return this.http.get<Category[]>(this.prefix+'categories');
   }
 
   postCategory(category: Category) {
     const prueba :Category = category;
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json')
-    return this.http.post<Category>('http://localhost:8000/category/new', prueba, {headers: headers});
+    return this.http.post<Category>(this.prefix+'category/new', prueba, {headers: headers});
   }
 
 

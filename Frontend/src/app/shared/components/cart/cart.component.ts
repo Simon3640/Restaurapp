@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '@app/shared/interfaces/product.interface';
 import { ProductToCartService } from '@app/shared/services/Connections/product-to-cart.service';
 import { ProductService } from '@app/shared/services/product.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
 import { Subscription } from 'rxjs';
+import { ThxComponent } from './thx/thx.component';
 
 @Component({
   selector: 'app-cart',
@@ -25,6 +26,7 @@ export class CartComponent implements OnInit {
     private productToCart : ProductToCartService,
     private productSvc : ProductService,
     private modal: NgbActiveModal,
+    private modalr : NgbModal
   ) {
    }
 
@@ -47,7 +49,8 @@ export class CartComponent implements OnInit {
     console.log(this.products);
     this.productToCart.removeAll();
     this.modal.close('confirm');
-
+    const modalRef = this.modalr.open(ThxComponent);
+    return modalRef.result;
   }
 
   onClose() {

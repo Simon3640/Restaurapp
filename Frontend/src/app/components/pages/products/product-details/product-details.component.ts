@@ -15,8 +15,24 @@ import { ProductToCartService } from '@app/shared/services/Connections/product-t
 export class ProductDetailsComponent implements OnInit {
 
   product: any;
+  totalAdiciones =0;
   ing : string[] = [];
   form : FormGroup;
+  form2: FormGroup;
+  Adiciones : any[] = [
+    {
+      name: 'Tocineta',
+      price: '1000',
+    },
+    {
+      name: 'Queso chedar',
+      price: '2000',
+    },
+    {
+      name: 'Bombón de pollo',
+      price: '3000',
+    }
+  ];
   @Input() id: number=0;
 
   constructor(
@@ -29,6 +45,10 @@ export class ProductDetailsComponent implements OnInit {
   ) { 
     this.form = this.fb.group({
       checkArray: this.fb.array([]),
+    });
+
+    this.form2 = this.fb.group({
+      checkArray2: this.fb.array([]),
     });
 
   }
@@ -62,6 +82,23 @@ export class ProductDetailsComponent implements OnInit {
       });
     }
   }
+
+  onCheckboxChange2(e: any) {
+    const checkArray2: FormArray = this.form2.get('checkArray2') as FormArray;
+    if (e.target.checked) {
+      checkArray2.push(new FormControl(e.target.value));
+    } else {
+      let i: number = 0;
+      checkArray2.controls.forEach((item: any) => {
+        if (item.value == e.target.value) {
+          checkArray2.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+    this.totalAdiciones = this.form2.get('checkArray2')?.value.reduce((a : any, b: any) => Number(a) + Number(b), 0);
+  }
   
   close(){
       this.modal.dismissAll('reason');
@@ -73,6 +110,7 @@ export class ProductDetailsComponent implements OnInit {
 
   add(){
       this.addIngredient(this.form.get('checkArray')?.value);
+      console.log(this.form.get('checkArray')?.value);
       this.productToCart.addProduct(this.product);
       this.modal.dismissAll('reason');
 }

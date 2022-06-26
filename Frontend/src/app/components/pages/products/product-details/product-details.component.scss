@@ -4,6 +4,12 @@
     align-items: flex-start;
     justify-content: center;
     margin-top: 20px;
+    .personaliza{
+        color: #9a0e0e;
+        width: 100%;
+        text-align: center;
+
+    }
     h4{
         margin-bottom: 10px;
         color: var(--bright-navy-blue);
@@ -23,6 +29,7 @@
     width: 100%;
     flex-direction: column;
     padding: 5px;
+    overflow-y: auto;
     .card{
         width: 90%;
         max-width: 529px;
@@ -34,15 +41,15 @@
         margin: 5px auto;
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: space-between;
         .btn{
-            width:30%;
+            width:50%;
         }
         p{
             width: 30%;
             margin-right: 10px;
             color: green;
-            margin: auto;
+            margin: auto 0; 
             font-weight: 700;
         }
     }
@@ -51,6 +58,9 @@
 .formIngredients{
     display: flex;
     flex-direction: column;
+    .AddContainer{
+        display: flex;
+    }
     input[type=checkbox]{
         display:none;
     }
@@ -82,6 +92,55 @@
         border-top-right-radius: 20% 50%;
         border-bottom-right-radius: 20% 50%;
         background-color: #9a0e0e;
+    }
+    
+}
+
+.formAdiciones{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    h4{
+        margin:10px 0;
+        color: var(--bright-navy-blue);
+    }
+    .AddContainer{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 24px;
+    }
+    input[type=checkbox]{
+        display:none;
+    }
+    label{
+        cursor: pointer;
+        transition: 0.5s;
+    
+    }
+    label:before{
+        content:'';
+        background: transparent;
+        border: 2px solid var(--color-primary);
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 3px;
+        height: 10px;
+        text-align: center;
+        vertical-align: middle;
+        width: 10px;
+    }
+    input[type=checkbox]:checked + label:before{
+        background-color: rgb(79, 135, 79);
+        border: 2px solid white;
+    }
+    input[type=checkbox]:checked + label{
+        color: white;
+        padding-right: 35px;
+        transition: 0.5s;
+        border-top-right-radius: 20% 50%;
+        border-bottom-right-radius: 20% 50%;
+        background-color: rgb(79, 135, 79);
     }
     
 }

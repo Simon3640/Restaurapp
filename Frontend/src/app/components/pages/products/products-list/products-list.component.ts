@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, take } from 'rxjs';
 import { CategoryComponent } from '../category/category.component';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
+import { VrComponent } from './vr/vr.component';
 
 
 @Component({
@@ -38,5 +39,10 @@ export class ProductsListComponent implements OnInit {
     modalRef.componentInstance.id = productid;
     return modalRef.result;
 
+  }
+
+  verde(){
+    const modalRef = this.modal.open(VrComponent)
+    return modalRef.result;
   }
 }

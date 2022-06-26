@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderControlComponent implements OnInit {
 
+order = {
+  id: 1,
+  name: 'Order 1',
+  date: '2020-01-01',
+  status: 'Pending',
+}
+
   constructor() { }
 
   ngOnInit(): void {
